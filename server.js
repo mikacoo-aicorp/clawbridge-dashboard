@@ -8,7 +8,7 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const VERSION = 'v0.2.260228.14';
+const VERSION = 'v0.2.260228.15';
 const PORT = process.env.PORT || 3000;
 
 const DATA_DIR = path.join(__dirname, 'data');
@@ -219,8 +219,8 @@ app.get('/api/usage', async (req, res) => {
             usageData.days = {};
         }
 
-        // Add each session's tokens ONCE - first time we see it, never again
-        // This prevents inflation from repeated additions
+        // Add each session's tokens - track the DELTA (growth) over time
+        // First time: add all tokens. Subsequent: add only the increase since last check
         sessions.forEach(session => {
             const model = session.model;
             if (!ALL_MODELS.includes(model)) return;
@@ -231,13 +231,23 @@ app.get('/api/usage', async (req, res) => {
             const inputTokens = Number(session.inputTokens || 0);
             const outputTokens = Number(session.outputTokens || 0);
 
-            // Only add if we've NEVER seen this session before
-            if (!usageData.sessionSnapshots[sessionKey]) {
+            const previous = usageData.sessionSnapshots[sessionKey];
+
+            if (previous) {
+                // Session exists - add the DELTA (increase since last check)
+                const deltaIn = Math.max(0, inputTokens - previous.inputTokens);
+                const deltaOut = Math.max(0, outputTokens - previous.outputTokens);
+                if (deltaIn > 0 || deltaOut > 0) {
+                    usageData.models[model].inputTokens += deltaIn;
+                    usageData.models[model].outputTokens += deltaOut;
+                }
+            } else {
+                // First time seeing this session - add all tokens
                 usageData.models[model].inputTokens += inputTokens;
                 usageData.models[model].outputTokens += outputTokens;
             }
 
-            // Always update snapshot
+            // Always update snapshot with current values
             usageData.sessionSnapshots[sessionKey] = {
                 model,
                 inputTokens,

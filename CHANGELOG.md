@@ -29,6 +29,21 @@ Example: `v0.2.260228.1` = Version 0, Month 02, Feb 28 2026, Build 1
 
 ---
 
+## v0.2.260228.15 - 2026-02-28
+
+### Fixed: API Usage - Track token growth via delta
+
+**Problem:** Dashboard only captured initial session tokens, not growth over time.
+
+**Solution:** Track DELTA (increase) each time:
+- First time seeing session: add all tokens (base)
+- Subsequent times: add only the INCREASE since last check
+- Stable when no growth (delta = 0)
+
+This accurately tracks cumulative usage throughout the month.
+
+---
+
 ## v0.2.260228.14 - 2026-02-28
 
 ### Fixed: API Usage Token Tracking (Final)

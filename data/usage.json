@@ -3,12 +3,12 @@
   "lastReset": "2026-02-28",
   "models": {
     "MiniMax-M2.5": {
-      "inputTokens": 232961,
-      "outputTokens": 5253
+      "inputTokens": 1527231,
+      "outputTokens": 7533
     },
     "claude-sonnet-4-6": {
-      "inputTokens": 3,
-      "outputTokens": 1138
+      "inputTokens": 0,
+      "outputTokens": 0
     },
     "openai-codex-5.3": {
       "inputTokens": 0,
@@ -16,41 +16,47 @@
     }
   },
   "sessionSnapshots": {
-    "agent:main:main": {
+    "agent:warren:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 106414,
-      "outputTokens": 134,
-      "updatedAt": 1772275861035
+      "inputTokens": 18610,
+      "outputTokens": 567,
+      "updatedAt": 1772297666252
     },
     "agent:turing:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 32,
-      "outputTokens": 37,
-      "updatedAt": 1772276112964
+      "inputTokens": 1372306,
+      "outputTokens": 5070,
+      "updatedAt": 1772298144773
+    },
+    "agent:main:main": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 99104,
+      "outputTokens": 237,
+      "updatedAt": 1772295827528
     },
     "agent:main:slack:channel:d0afcg83727": {
       "model": "MiniMax-M2.5",
       "inputTokens": 32,
-      "outputTokens": 187,
-      "updatedAt": 1772275857831
-    },
-    "agent:turing:subagent:d9be55e9-bc5f-4e96-bb53-6b6c80b19181": {
-      "model": "claude-sonnet-4-6",
-      "inputTokens": 3,
-      "outputTokens": 1138,
-      "updatedAt": 1772273833299
-    },
-    "agent:turing:subagent:2898b608-6ce3-420e-b6ae-1de54d0bc6dd": {
-      "model": "MiniMax-M2.5",
-      "inputTokens": 85973,
-      "outputTokens": 2610,
-      "updatedAt": 1772273790703
+      "outputTokens": 42,
+      "updatedAt": 1772295821547
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 314,
-      "outputTokens": 226,
-      "updatedAt": 1772265794622
+      "inputTokens": 329,
+      "outputTokens": 146,
+      "updatedAt": 1772287394614
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:16a04755-a9e6-44a0-8a55-047e77bfea21": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 329,
+      "outputTokens": 146,
+      "updatedAt": 1772287394614
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:e56183f6-a990-47c0-8afc-c1c2ead35a49": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 330,
+      "outputTokens": 192,
+      "updatedAt": 1772276594618
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:e2943e49-a00a-4cc2-b9e4-6f15d741b9f1": {
       "model": "MiniMax-M2.5",
@@ -69,26 +75,14 @@
       "inputTokens": 2002,
       "outputTokens": 429,
       "updatedAt": 1772265600066
-    },
-    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:ecdcd975-9d02-4252-a3f6-d52b70a7ba1e": {
-      "model": "MiniMax-M2.5",
-      "inputTokens": 338,
-      "outputTokens": 173,
-      "updatedAt": 1772254994646
-    },
-    "agent:turing:subagent:49d5fc28-e1c0-438e-bb84-7a9d83d4902c": {
-      "model": "MiniMax-M2.5",
-      "inputTokens": 7211,
-      "outputTokens": 512,
-      "updatedAt": 1772276033186
     }
   },
   "days": {
     "2026-02-28": {
       "models": {
         "MiniMax-M2.5": {
-          "inputTokens": 232961,
-          "outputTokens": 5253,
+          "inputTokens": 1527231,
+          "outputTokens": 7533,
           "cost": null
         },
         "openai-codex-5.3": {
@@ -97,15 +91,15 @@
           "cost": 0
         },
         "claude-sonnet-4-6": {
-          "inputTokens": 3,
-          "outputTokens": 1138,
-          "cost": 0.017
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "cost": 0
         }
       },
-      "totalCost": 0.017,
-      "totalTokens": 239355,
+      "totalCost": 0,
+      "totalTokens": 1534764,
       "sessionCount": 10,
-      "timestamp": "2026-02-28T10:55:19.517Z"
+      "timestamp": "2026-02-28T17:02:45.815Z"
     }
   }
 }
