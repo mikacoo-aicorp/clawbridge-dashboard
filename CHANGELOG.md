@@ -25,7 +25,50 @@ Example: `v0.2.260228.1` = Version 0, Month 02, Feb 28 2026, Build 1
 | Uptime | 1 hour | Rarely changes |
 | Disk | 30 minutes | Expensive to fetch |
 | Full dashboard | 30 seconds | All other modules |
-| API Usage | 30 minutes | Expensive: calls `openclaw gateway call status --json` |
+| API Usage | 30 seconds | |
+
+---
+
+## v0.2.260228.13 - 2026-02-28
+
+### Fixed: API Usage Token Tracking
+
+**Problem:** Token counts were inconsistent, jumping around, or not accumulating properly.
+
+**Solution: Running Maximum Per-Session Delta Tracking**
+
+The API Usage module now uses a robust tracking methodology:
+
+1. **Data Source:** OpenClaw gateway `sessions[].inputTokens` and `sessions[].outputTokens`
+2. **Per-Session Tracking:** Each session is tracked by its unique session key
+3. **Delta-Only Addition:** Only the INCREMENT (new tokens since last check) is added to totals
+4. **Running Maximum:** Each session stores its highest token count seen; when it grows, the delta is added
+5. **No Double-Counting:** Sessions that haven't grown since last check add nothing
+6. **Monthly Reset:** All data clears on the 1st of each month
+
+**Formula:**
+```
+storedTotal[new] = storedTotal[old] + max(0, currentTokens - previousMax)
+```
+
+**Why This Works:**
+- Gateway session tokens are cumulative (include full conversation history)
+- Sessions can restart, causing counts to drop — we track peaks, not current values
+- Only adding deltas prevents over-counting on refresh
+- Monthly reset ensures clean billing cycle
+
+**Data Storage:** `data/usage.json`
+```json
+{
+  "models": { "MiniMax-M2.5": { "inputTokens": X, "outputTokens": Y }, ... },
+  "sessionSnapshots": { "sessionKey": { "inputTokens": X, "outputTokens": Y, ... } },
+  "month": "2026-02",
+  "lastReset": "2026-02-28"
+}
+```
+
+### Added
+- CPU temperature monitoring via `smctemp` (Apple Silicon)
 
 ---
 

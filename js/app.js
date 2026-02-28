@@ -303,7 +303,7 @@ class NexusDashboard {
                 </div>
                 <div class="stat-item">
                     <div class="stat-label" style="text-align:center">CPU Temp</div>
-                    <div class="stat-value" id="cpu-temp-value" style="text-align:center;color:${this.getTempColor(data.cpu?.temperature)}">${data.cpu?.temperature || '--'}°C</div>
+                    <div class="stat-value" id="cpu-temp-value" style="text-align:center;color:${this.getTempColor(this.getCpuTemperature(data))}">${this.formatTemperature(this.getCpuTemperature(data))}</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label" style="text-align:center">Memory</div>
@@ -560,7 +560,7 @@ class NexusDashboard {
                     const data = await response.json();
                     this.data.system = data;
                     this.updateSystemMetric('cpu', data.cpu?.usage || 0);
-                    this.updateSystemMetric('temperature', data.cpu?.temperature || null);
+                    this.updateSystemMetric('temperature', this.getCpuTemperature(data));
                 }
             } catch (error) {
                 console.error('Error refreshing CPU:', error);
@@ -633,18 +633,11 @@ class NexusDashboard {
                 cpuBar.style.width = `${Math.min(100, value)}%`;
                 cpuBar.className = `progress-fill ${value > 80 ? 'danger' : value > 60 ? 'warning' : ''}`;
             }
-        } else if (metric === 'temperature' && value) {
+        } else if (metric === 'temperature') {
             const tempEl = document.getElementById('cpu-temp-value');
             if (tempEl) {
-                tempEl.textContent = `${value}°C`;
-                // Color based on temperature
-                if (value > 80) {
-                    tempEl.style.color = 'var(--accent-red)';
-                } else if (value > 60) {
-                    tempEl.style.color = 'var(--accent-orange)';
-                } else {
-                    tempEl.style.color = 'var(--accent-green)';
-                }
+                tempEl.textContent = this.formatTemperature(value);
+                tempEl.style.color = this.getTempColor(value);
             }
         } else if (metric === 'memory' && value) {
             const memVal = document.getElementById('memory-value');
@@ -685,11 +678,37 @@ class NexusDashboard {
         }
     }
 
+    // Utility: Get CPU temperature from different payload shapes
+    getCpuTemperature(data = {}) {
+        const candidates = [
+            data?.cpu?.temperature,
+            data?.cpu?.temp,
+            data?.temperature?.cpu,
+            data?.temp?.cpu,
+            data?.system?.cpu?.temperature
+        ];
+
+        for (const value of candidates) {
+            if (value === null || value === undefined || value === '') continue;
+            const parsed = typeof value === 'number' ? value : parseFloat(String(value).replace(/[^\d.-]/g, ''));
+            if (!Number.isNaN(parsed)) return Math.round(parsed);
+        }
+
+        return null;
+    }
+
+    // Utility: Temperature display formatter
+    formatTemperature(temp) {
+        if (temp === null || temp === undefined || Number.isNaN(Number(temp))) return '--';
+        return `${Math.round(Number(temp))}°C`;
+    }
+
     // Utility: Get temperature color
     getTempColor(temp) {
-        if (!temp) return 'var(--text-secondary)';
-        if (temp > 80) return 'var(--accent-red)';
-        if (temp > 60) return 'var(--accent-orange)';
+        if (temp === null || temp === undefined || Number.isNaN(Number(temp))) return 'var(--text-secondary)';
+        const t = Number(temp);
+        if (t > 80) return 'var(--accent-red)';
+        if (t > 60) return 'var(--accent-orange)';
         return 'var(--accent-green)';
     }
 
