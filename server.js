@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 const DATA_DIR = path.join(__dirname, 'data');
 const USAGE_FILE = path.join(DATA_DIR, 'usage.json');
-const ALL_MODELS = ['MiniMax-M2.5', 'claude-sonnet-4-6', 'openai-codex-5.3'];
+const ALL_MODELS = ['MiniMax-M2.5', 'openai-codex-5.3', 'claude-sonnet-4-6'];
 
 if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
