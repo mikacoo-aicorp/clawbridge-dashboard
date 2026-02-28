@@ -197,50 +197,55 @@ class NexusDashboard {
         `;
     }
 
-    // Render Status Module (Agents & Sessions)
+    // Render Status Module (Agents & Sessions) - Collapsible Accordion
     renderStatus(data) {
-        const sessions = data.sessions?.recent || [];
         const agents = data.sessions?.byAgent || [];
 
-        // Agents section
-        const agentsHTML = agents.map(agent => `
-            <div class="agent-item">
-                <div class="agent-info">
-                    <div class="agent-avatar">${agent.agentId.charAt(0).toUpperCase()}</div>
-                    <span class="agent-name">${agent.agentId}</span>
+        // Build accordion HTML - each agent is a collapsible section
+        const agentsHTML = agents.map((agent, index) => {
+            // Build sessions list for this agent
+            const sessionsList = (agent.recent || []).map(session => {
+                const fullKey = session.key;
+                const shortKey = this.shortenSessionKey(fullKey);
+                const needsExpansion = shortKey !== fullKey;
+                
+                return `
+                <div class="session-item${needsExpansion ? ' expandable' : ''}"${needsExpansion ? ` onclick="this.classList.toggle('expanded'); this.querySelector('.session-key').textContent = this.classList.contains('expanded') ? '${fullKey}' : '${shortKey}'"` : ''}>
+                    <div class="session-key">${shortKey}</div>
+                    <div class="session-meta">
+                        <span>${session.model || 'N/A'}</span>
+                        <span>${this.formatTokens(session.totalTokens)} tokens</span>
+                        <span>${this.formatAge(session.age)}</span>
+                    </div>
                 </div>
-                <div class="agent-status">
-                    <span class="dot"></span>
-                    ${agent.count} sessions
-                </div>
-            </div>
-        `).join('');
+            `;
+            }).join('');
 
-        // Sessions section - shortened keys with click to expand (only if needed)
-        const sessionsHTML = sessions.slice(0, CONFIG.ui.maxSessions).map(session => {
-            const fullKey = session.key;
-            const shortKey = this.shortenSessionKey(fullKey);
-            const needsExpansion = shortKey !== fullKey;
-            
             return `
-            <div class="session-item${needsExpansion ? ' expandable' : ''}"${needsExpansion ? ` onclick="this.classList.toggle('expanded'); this.querySelector('.session-key').textContent = this.classList.contains('expanded') ? '${fullKey}' : '${shortKey}'"` : ''}>
-                <div class="session-key">${shortKey}</div>
-                <div class="session-meta">
-                    <span>${session.model || 'N/A'}</span>
-                    <span>${this.formatTokens(session.totalTokens)} tokens</span>
-                    <span>${this.formatAge(session.age)}</span>
+            <div class="agent-accordion">
+                <div class="agent-accordion-header" onclick="this.classList.toggle('expanded'); this.nextElementSibling.classList.toggle('expanded');">
+                    <div class="agent-info">
+                        <span class="accordion-arrow">▶</span>
+                        <div class="agent-avatar">${agent.agentId.charAt(0).toUpperCase()}</div>
+                        <span class="agent-name">${agent.agentId}</span>
+                    </div>
+                    <div class="agent-status">
+                        <span class="dot"></span>
+                        ${agent.count} session${agent.count !== 1 ? 's' : ''}
+                    </div>
+                </div>
+                <div class="agent-accordion-content">
+                    <div class="sessions-list">
+                        ${sessionsList || '<div class="session-empty">No sessions</div>'}
+                    </div>
                 </div>
             </div>
-        `}).join('');
+        `;
+        }).join('');
 
         return `
-            <div style="margin-bottom: 16px;">
-                <div class="stat-label" style="margin-bottom: 8px;">Active Agents</div>
-                <div class="agent-list">${agentsHTML || '<div class="stat-item">No agents</div>'}</div>
-            </div>
-            <div>
-                <div class="stat-label" style="margin-bottom: 8px;">Recent Sessions</div>
-                ${sessionsHTML || '<div class="stat-item">No sessions</div>'}
+            <div class="agents-accordion-container">
+                ${agentsHTML || '<div class="stat-item">No agents</div>'}
             </div>
         `;
     }

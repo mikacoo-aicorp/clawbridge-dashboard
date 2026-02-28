@@ -8,7 +8,7 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const VERSION = 'v0.2.260228.13';
+const VERSION = 'v0.2.260228.14';
 const PORT = process.env.PORT || 3000;
 
 const DATA_DIR = path.join(__dirname, 'data');
@@ -219,8 +219,8 @@ app.get('/api/usage', async (req, res) => {
             usageData.days = {};
         }
 
-        // Track running maximum per session - only add delta when session grows
-        // This is the most accurate we can get from gateway session data
+        // Add each session's tokens ONCE - first time we see it, never again
+        // This prevents inflation from repeated additions
         sessions.forEach(session => {
             const model = session.model;
             if (!ALL_MODELS.includes(model)) return;
@@ -231,29 +231,17 @@ app.get('/api/usage', async (req, res) => {
             const inputTokens = Number(session.inputTokens || 0);
             const outputTokens = Number(session.outputTokens || 0);
 
-            // Get previous max for this session
-            const previous = usageData.sessionSnapshots[sessionKey];
-            const prevInput = previous?.inputTokens || 0;
-            const prevOutput = previous?.outputTokens || 0;
-
-            // Calculate delta (only add new tokens since last max)
-            const deltaInput = Math.max(0, inputTokens - prevInput);
-            const deltaOutput = Math.max(0, outputTokens - prevOutput);
-
-            // Add delta to running totals
-            if (deltaInput > 0 || deltaOutput > 0) {
-                usageData.models[model].inputTokens += deltaInput;
-                usageData.models[model].outputTokens += deltaOutput;
+            // Only add if we've NEVER seen this session before
+            if (!usageData.sessionSnapshots[sessionKey]) {
+                usageData.models[model].inputTokens += inputTokens;
+                usageData.models[model].outputTokens += outputTokens;
             }
 
-            // Update session snapshot to new max
-            const maxInput = Math.max(prevInput, inputTokens);
-            const maxOutput = Math.max(prevOutput, outputTokens);
-
+            // Always update snapshot
             usageData.sessionSnapshots[sessionKey] = {
                 model,
-                inputTokens: maxInput,
-                outputTokens: maxOutput,
+                inputTokens,
+                outputTokens,
                 updatedAt: session.updatedAt || new Date().toISOString()
             };
         });

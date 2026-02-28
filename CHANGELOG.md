@@ -29,6 +29,31 @@ Example: `v0.2.260228.1` = Version 0, Month 02, Feb 28 2026, Build 1
 
 ---
 
+## v0.2.260228.14 - 2026-02-28
+
+### Fixed: API Usage Token Tracking (Final)
+
+**Problem:** Token counts were inflating because session tokens were being added on every API call.
+
+**Solution:** "Add Once" methodology - each session's tokens are added exactly once (first time seen), never again.
+
+```javascript
+if (!usageData.sessionSnapshots[sessionKey]) {
+    // New session - add tokens
+    usageData.models[model].inputTokens += inputTokens;
+    usageData.models[model].outputTokens += outputTokens;
+}
+// Always update snapshot
+usageData.sessionSnapshots[sessionKey] = { ... };
+```
+
+**Limitation:** Can only track currently active sessions. Sessions that have ended are not captured.
+
+### Added
+- Collapsible Agents & Sessions module (accordion UI)
+
+---
+
 ## v0.2.260228.13 - 2026-02-28
 
 ### Fixed: API Usage Token Tracking

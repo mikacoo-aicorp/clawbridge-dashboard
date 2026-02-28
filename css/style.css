@@ -264,11 +264,75 @@ body {
     background: linear-gradient(90deg, var(--accent-red), #ff6b6b);
 }
 
-/* Agent List */
-.agent-list {
+/* Agent Accordion Styles */
+.agents-accordion-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+.agent-accordion {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.agent-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.agent-accordion-header:hover {
+    background: var(--bg-tertiary);
+}
+
+.agent-accordion-header .agent-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.accordion-arrow {
+    font-size: 10px;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+
+.agent-accordion-header.expanded .accordion-arrow {
+    transform: rotate(90deg);
+}
+
+.agent-accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: var(--bg-primary);
+}
+
+.agent-accordion-content.expanded {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.sessions-list {
+    padding: 8px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.session-empty {
+    text-align: center;
+    padding: 16px;
+    color: var(--text-muted);
+    font-size: 12px;
 }
 
 .agent-item {
