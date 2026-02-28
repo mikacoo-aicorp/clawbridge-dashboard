@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClawBridge | Command Center</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon" aria-label="OpenClaw">🦞</span>
+                <span class="logo-text">CLAWBRIDGE</span>
+            </div>
+            <div class="header-status">
+                <span class="status-dot online"></span>
+                <span class="status-text">Connected</span>
+            </div>
+        </header>
+
+        <main class="dashboard" id="dashboard">
+            <!-- Modules will be loaded here dynamically -->
+        </main>
+
+        <footer class="footer">
+            <span class="footer-text">Last updated: <span id="last-updated">--</span></span>
+            <span class="footer-version">v0.2.260228.12</span>
+        </footer>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

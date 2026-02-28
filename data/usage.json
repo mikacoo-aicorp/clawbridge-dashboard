@@ -1,0 +1,44 @@
+{
+  "days": {
+    "2026-02-28": {
+      "models": {
+        "MiniMax-M2.5": {
+          "inputTokens": 725617,
+          "outputTokens": 2801,
+          "cost": null
+        },
+        "claude-sonnet-4-6": {
+          "inputTokens": 7,
+          "outputTokens": 724,
+          "cost": 0.011
+        },
+        "openai-codex-5.3": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "cost": 0
+        }
+      },
+      "totalCost": 0.011,
+      "totalTokens": 729149,
+      "sessionCount": 9,
+      "timestamp": "2026-02-28T03:47:58.385Z"
+    }
+  },
+  "maxTokensByModel": {
+    "MiniMax-M2.5": {
+      "maxTokens": 728418,
+      "inputTokens": 725617,
+      "outputTokens": 2801
+    },
+    "claude-sonnet-4-6": {
+      "maxTokens": 731,
+      "inputTokens": 7,
+      "outputTokens": 724
+    },
+    "openai-codex-5.3": {
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0
+    }
+  }
+}
