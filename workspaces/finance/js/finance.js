@@ -1,0 +1,1 @@
+// Finance workspace script placeholder

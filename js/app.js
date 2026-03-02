@@ -195,7 +195,7 @@ class NexusDashboard {
                 <div class="health-status ${isHealthy ? 'healthy' : 'error'}">
                     ${isHealthy ? 'Healthy' : 'Error'}
                 </div>
-                <div class="version-info">${version}</div>
+                <div class="version-info">OpenClaw ${version}</div>
             </div>
             <div class="channel-subheading">Channels</div>
             <div class="stats-grid">
@@ -506,14 +506,14 @@ class NexusDashboard {
         const modelNames = {
             'MiniMax-M2.5': 'MiniMax M2.5',
             'claude-sonnet-4-6': 'Claude Sonnet 4.6',
-            'openai-codex-5.3': 'OpenAI Codex 5.3'
+            'gpt-5.3-codex': 'GPT Codex 5.3'
         };
 
         // Model icons
         const modelIcons = {
             'MiniMax-M2.5': '🔵',
             'claude-sonnet-4-6': '🟣',
-            'openai-codex-5.3': '🟢'
+            'gpt-5.3-codex': '🟢'
         };
 
         const modelRows = Object.entries(models).map(([model, stats]) => {

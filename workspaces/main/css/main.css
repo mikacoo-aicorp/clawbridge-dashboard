@@ -70,24 +70,6 @@ body {
     z-index: 100;
 }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.header-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-}
-}
-
 .logo {
     display: flex;
     align-items: center;
@@ -491,51 +473,6 @@ body {
     color: var(--text-muted);
 }
 
-/* Main Content */
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Workspace Tab Navigation */
-.workspace-tabs {
-    display: flex;
-    gap: 4px;
-    padding: 8px 16px;
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.workspace-tabs .tab {
-    padding: 8px 16px;
-    border: none;
-    background: transparent;
-    color: var(--text-muted);
-    cursor: pointer;
-    border-radius: 4px 4px 0 0;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    transition: var(--transition);
-}
-
-.workspace-tabs .tab:hover {
-    color: var(--text-primary);
-    background: var(--bg-tertiary);
-}
-
-.workspace-tabs .tab.active {
-    background: var(--bg-primary);
-    color: var(--accent-cyan);
-    border-bottom: 2px solid var(--accent-cyan);
-}
-
-#workspace-container {
-    flex: 1;
-    padding: 0;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
     .dashboard {
@@ -614,8 +551,7 @@ body {
 
 .version-info {
     font-size: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--accent-cyan);
+    color: var(--text-muted);
 }
 
 .channel-subheading {
@@ -720,9 +656,9 @@ body {
     border: 1px solid rgba(0, 255, 136, 0.35);
 }
 
-.cron-status.removed {
-    color: var(--accent-red);
-    border: 1px solid rgba(255, 71, 87, 0.35);
+.cron-status.disabled {
+    color: var(--text-muted);
+    border: 1px solid rgba(113, 113, 122, 0.35);
 }
 
 .cron-empty {
