@@ -1,4 +1,4 @@
-// Nexus Dashboard - Main Application
+// Nexus Dashboard - Main Workspace Application
 
 class NexusDashboard {
     constructor() {
@@ -771,7 +771,11 @@ class NexusDashboard {
     }
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize when DOM is ready (supports dynamic script injection)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.nexus = new NexusDashboard();
+    });
+} else {
     window.nexus = new NexusDashboard();
-});
+}

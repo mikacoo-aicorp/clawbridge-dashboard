@@ -13,18 +13,28 @@
 <body>
     <div class="app">
         <header class="header">
-            <div class="logo">
-                <span class="logo-icon" aria-label="OpenClaw">🦞</span>
-                <span class="logo-text">CLAWBRIDGE</span>
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-icon" aria-label="OpenClaw">🦞</span>
+                    <span class="logo-text">CLAWBRIDGE</span>
+                </div>
             </div>
-            <div class="header-status">
-                <span class="status-dot online"></span>
-                <span class="status-text">Connected</span>
+            <div class="header-center">
+                <nav class="workspace-tabs" aria-label="Workspace Navigation">
+                    <button class="tab active" data-workspace="main" type="button">Main</button>
+                    <button class="tab" data-workspace="finance" type="button">Finance</button>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="header-status">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">Connected</span>
+                </div>
             </div>
         </header>
 
-        <main class="dashboard" id="dashboard">
-            <!-- Modules will be loaded here dynamically -->
+        <main class="main-content">
+            <div id="workspace-container"></div>
         </main>
 
         <footer class="footer">
@@ -34,6 +44,6 @@
     </div>
 
     <script src="js/config.js"></script>
-    <script src="js/app.js?v=2603022"></script>
+    <script src="js/workspaces.js"></script>
 </body>
 </html>

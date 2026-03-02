@@ -4,16 +4,16 @@
  */
 
 const express = require('express');
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const VERSION = 'v0.2.260302.4';
+const VERSION = 'v0.2.260302.6';
 const PORT = process.env.PORT || 3000;
 
 const DATA_DIR = path.join(__dirname, 'data');
 const USAGE_FILE = path.join(DATA_DIR, 'usage.json');
-const ALL_MODELS = ['MiniMax-M2.5', 'openai-codex-5.3', 'claude-sonnet-4-6'];
+const ALL_MODELS = ['MiniMax-M2.5', 'gpt-5.3-codex', 'claude-sonnet-4-6'];
 
 if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -23,7 +23,7 @@ function emptyModelTotals() {
     return {
         'MiniMax-M2.5': { inputTokens: 0, outputTokens: 0 },
         'claude-sonnet-4-6': { inputTokens: 0, outputTokens: 0 },
-        'openai-codex-5.3': { inputTokens: 0, outputTokens: 0 }
+        'gpt-5.3-codex': { inputTokens: 0, outputTokens: 0 }
     };
 }
 
@@ -79,9 +79,21 @@ function getTodayKey() {
 
 const app = express();
 app.use(express.static('.'));
+app.use('/workspaces', express.static(path.join(__dirname, 'workspaces')));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/workspaces/:workspace', (req, res) => {
+    const workspace = req.params.workspace;
+    const workspaceIndex = path.join(__dirname, 'workspaces', workspace, 'index.html');
+
+    if (fs.existsSync(workspaceIndex)) {
+        return res.sendFile(workspaceIndex);
+    }
+
+    return res.status(404).send('Workspace not found');
 });
 
 app.get('/api/gateway/:method', async (req, res) => {
@@ -206,7 +218,7 @@ app.get('/api/dashboard-version', async (req, res) => {
 const PRICING = {
     'MiniMax-M2.5': { input: 0.10, output: 0.30 },
     'claude-sonnet-4-6': { input: 3.00, output: 15.00 },
-    'openai-codex-5.3': { input: 1.75, output: 14.00 }
+    'gpt-5.3-codex': { input: 1.75, output: 14.00 }
 };
 
 app.get('/api/usage', async (req, res) => {
