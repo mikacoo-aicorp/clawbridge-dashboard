@@ -64,6 +64,7 @@ class NexusDashboard {
         const endpoints = [
             { key: 'health', url: '/api/gateway/health' },
             { key: 'version', url: '/api/version' },
+            { key: 'dashboardVersion', url: '/api/dashboard-version' },
             { key: 'status', url: '/api/gateway/status' },
             { key: 'system', url: '/api/system' },
             { key: 'knowledge', url: '/api/knowledge' },
@@ -77,6 +78,12 @@ class NexusDashboard {
                 const data = await response.json();
                 this.data[key] = data;
                 this.renderModule(key, data);
+                
+                // Update footer version
+                if (key === 'dashboardVersion' && data.version) {
+                    const footerVersion = document.getElementById('footer-version');
+                    if (footerVersion) footerVersion.textContent = data.version;
+                }
             } catch (error) {
                 console.error(`Error fetching ${key}:`, error);
                 this.renderError(key, error.message);
@@ -188,7 +195,7 @@ class NexusDashboard {
                 <div class="health-status ${isHealthy ? 'healthy' : 'error'}">
                     ${isHealthy ? 'Healthy' : 'Error'}
                 </div>
-                <div class="version-info">OpenClaw ${version}</div>
+                <div class="version-info">${version}</div>
             </div>
             <div class="channel-subheading">Channels</div>
             <div class="stats-grid">
@@ -330,19 +337,37 @@ class NexusDashboard {
 
     // Render Knowledge Base Module
     renderKnowledge(data) {
-        const count = data.count || 0;
+        const total = data.total || 0;
+        const categories = data.categories || {};
+        const catNames = {
+            business: 'Business',
+            finance: 'Finance',
+            personal: 'Personal',
+            references: 'References'
+        };
+        
+        const catRows = Object.entries(categories).map(([key, count]) => `
+            <div class="kb-category">
+                <span class="kb-cat-name">${catNames[key] || key}</span>
+                <span class="kb-cat-count">${count}</span>
+            </div>
+        `).join('');
+        
         return `
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-label">Documents</div>
-                    <div class="stat-value green">${count}</div>
+                    <div class="stat-label">Total Documents</div>
+                    <div class="stat-value green">${total}</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Status</div>
-                    <div class="stat-value ${count > 0 ? 'green' : 'orange'}">
-                        ${count > 0 ? 'Active' : 'Empty'}
+                    <div class="stat-value ${total > 0 ? 'green' : 'orange'}">
+                        ${total > 0 ? 'Active' : 'Empty'}
                     </div>
                 </div>
+            </div>
+            <div class="kb-categories">
+                ${catRows}
             </div>
         `;
     }

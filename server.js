@@ -8,7 +8,7 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const VERSION = 'v0.2.260302.1';
+const VERSION = 'v0.2.260302.4';
 const PORT = process.env.PORT || 3000;
 
 const DATA_DIR = path.join(__dirname, 'data');
@@ -162,9 +162,18 @@ app.get('/api/system', async (req, res) => {
 
 app.get('/api/knowledge', async (req, res) => {
     try {
-        const count = await new Promise((resolve) => exec('find ~/.openclaw/shared/knowledge_base -type f -name "*.md" 2>/dev/null | wc -l', (err, stdout) => resolve(parseInt(stdout.trim()) || 0)));
-        res.json({ count });
-    } catch { res.json({ count: 0 }); }
+        const kbPath = '/Users/and/.openclaw/shared/knowledge_base';
+        const categories = ['business', 'finance', 'personal', 'references'];
+        
+        const categoryCounts = {};
+        for (const cat of categories) {
+            const count = await new Promise((resolve) => exec(`find ${kbPath}/${cat} -type f -name "*.md" 2>/dev/null | wc -l`, (err, stdout) => resolve(parseInt(stdout.trim()) || 0)));
+            categoryCounts[cat] = count;
+        }
+        
+        const total = Object.values(categoryCounts).reduce((a, b) => a + b, 0);
+        res.json({ total, categories: categoryCounts });
+    } catch { res.json({ total: 0, categories: { business: 0, finance: 0, personal: 0, references: 0 } }); }
 });
 
 app.get('/api/cron', async (req, res) => {
@@ -188,6 +197,10 @@ app.get('/api/version', async (req, res) => {
         const version = await new Promise((resolve) => exec('openclaw --version', (err, stdout) => resolve(stdout.trim())));
         res.json({ version });
     } catch { res.json({ version: 'unknown' }); }
+});
+
+app.get('/api/dashboard-version', async (req, res) => {
+    res.json({ version: VERSION });
 });
 
 const PRICING = {
@@ -297,7 +310,8 @@ app.get('/api/usage', async (req, res) => {
             totalTokens,
             sessionCount: sessions.length,
             month: usageData.month,
-            lastReset: usageData.lastReset
+            lastReset: usageData.lastReset,
+            timestamp: new Date().toISOString()
         });
     } catch (error) {
         res.status(500).json({ error: error.message });

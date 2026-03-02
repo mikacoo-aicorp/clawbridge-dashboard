@@ -772,3 +772,25 @@ body {
     padding-top: 8px;
     border-top: 1px solid var(--border-color);
 }
+
+.kb-categories {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.kb-category {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 12px;
+}
+
+.kb-cat-name {
+    color: var(--text-muted);
+}
+
+.kb-cat-count {
+    font-weight: 600;
+    color: var(--text-primary);
+}
