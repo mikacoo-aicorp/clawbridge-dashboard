@@ -720,7 +720,8 @@ class NexusDashboard {
     // Utility: Format tokens
     formatTokens(tokens) {
         if (!tokens) return '0';
-        if (tokens > 1000) return `${(tokens / 1000).toFixed(1)}k`;
+        if (tokens >= 1000000) return `${(tokens / 1000000).toFixed(1)}M`;
+        if (tokens >= 1000) return `${(tokens / 1000).toFixed(1)}k`;
         return tokens;
     }
 

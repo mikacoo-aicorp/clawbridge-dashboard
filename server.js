@@ -8,7 +8,7 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const VERSION = 'v0.2.260228.15';
+const VERSION = 'v0.2.260302.1';
 const PORT = process.env.PORT || 3000;
 
 const DATA_DIR = path.join(__dirname, 'data');
