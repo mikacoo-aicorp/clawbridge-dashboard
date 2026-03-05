@@ -610,7 +610,7 @@ class NexusDashboard {
             } catch (error) {
                 console.error('Error refreshing CPU:', error);
             }
-        }, 5000);
+        }, 2000);
 
         // Memory refresh every 10 seconds
         setInterval(async () => {
