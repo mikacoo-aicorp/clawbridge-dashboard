@@ -121,8 +121,11 @@ app.get('/api/system', async (req, res) => {
                 if (timeMatch) totalSec += parseInt(timeMatch[1]) * 3600 + parseInt(timeMatch[2]) * 60;
                 resolve(totalSec);
             })),
-            new Promise((resolve) => exec('top -l 1 -n 0 2>/dev/null | grep "CPU usage"', (err, stdout) => {
-                const match = stdout.match(/(\d+\.?\d*)% user, (\d+\.?\d*)% sys/);
+            new Promise((resolve) => exec('top -l 2 -n 0 2>/dev/null | grep "CPU usage"', (err, stdout) => {
+                const lines = stdout.trim().split('\n');
+                // Second iteration gives more accurate current usage
+                const lastLine = lines[lines.length - 1] || '';
+                const match = lastLine.match(/(\d+\.?\d*)% user, (\d+\.?\d*)% sys/);
                 resolve(match ? Math.round(parseFloat(match[1]) + parseFloat(match[2])) : 15);
             })),
             new Promise((resolve) => {

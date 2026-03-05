@@ -3,8 +3,8 @@
   "lastReset": "2026-03-01",
   "models": {
     "MiniMax-M2.5": {
-      "inputTokens": 25292099,
-      "outputTokens": 72092
+      "inputTokens": 25431441,
+      "outputTokens": 72171
     },
     "claude-sonnet-4-6": {
       "inputTokens": 0,
@@ -36,9 +36,9 @@
     },
     "agent:main:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 605371,
-      "outputTokens": 863,
-      "updatedAt": 1772728467365
+      "inputTokens": 744713,
+      "outputTokens": 942,
+      "updatedAt": 1772728809562
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:dfbf41d3-73db-499b-bbb6-0504dd4f185f": {
       "model": "MiniMax-M2.5",
@@ -60,9 +60,9 @@
     },
     "agent:turing:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 198313,
-      "outputTokens": 2531,
-      "updatedAt": 1772728440094
+      "inputTokens": 36403,
+      "outputTokens": 228,
+      "updatedAt": 1772728765055
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:16a04755-a9e6-44a0-8a55-047e77bfea21": {
       "model": "MiniMax-M2.5",
@@ -491,8 +491,8 @@
     "2026-03-05": {
       "models": {
         "MiniMax-M2.5": {
-          "inputTokens": 25292099,
-          "outputTokens": 72092,
+          "inputTokens": 25431441,
+          "outputTokens": 72171,
           "cost": null
         },
         "gpt-5.3-codex": {
@@ -507,9 +507,9 @@
         }
       },
       "totalCost": 0.27,
-      "totalTokens": 25451704,
+      "totalTokens": 25591125,
       "sessionCount": 20,
-      "timestamp": "2026-03-05T16:34:41.551Z"
+      "timestamp": "2026-03-05T16:40:26.343Z"
     }
   }
 }
