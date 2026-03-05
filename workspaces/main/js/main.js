@@ -414,13 +414,15 @@ class NexusDashboard {
             const isNew = addedKeys.has(job.id);
             const scheduleDesc = this.formatCronSchedule(job.schedule);
             const nextRun = formatNextRun(job.nextRun);
-            const statusClass = job.enabled ? 'active' : 'disabled';
+            const statusLed = job.enabled 
+                ? '<span class="cron-led active"></span>' 
+                : '<span class="cron-led inactive"></span>';
             
             return `
                 <div class="cron-item${isNew ? ' new' : ''}">
                     <div class="cron-header">
                         <span class="cron-name">${this.escapeHtml(job.name || 'Unnamed')}</span>
-                        <span class="cron-status ${statusClass}">${job.enabled ? 'ACTIVE' : 'DISABLED'}</span>
+                        ${statusLed}
                     </div>
                     <div class="cron-schedule">${scheduleDesc}</div>
                     <div class="cron-next">Next: ${nextRun}</div>
@@ -446,6 +448,22 @@ class NexusDashboard {
     // Format cron schedule to human readable
     formatCronSchedule(schedule) {
         if (!schedule) return 'Unknown';
+
+        // Handle object format (e.g., { kind: "every", everyMs: 259200000 })
+        if (typeof schedule === 'object') {
+            if (schedule.kind === 'every' && schedule.everyMs) {
+                const ms = schedule.everyMs;
+                const minutes = Math.floor(ms / 60000);
+                const hours = Math.floor(ms / 3600000);
+                const days = Math.floor(ms / 86400000);
+                
+                if (days >= 1) return `Every ${days} day${days > 1 ? 's' : ''}`;
+                if (hours >= 1) return `Every ${hours} hour${hours > 1 ? 's' : ''}`;
+                if (minutes >= 1) return `Every ${minutes} min`;
+                return `Every ${ms}ms`;
+            }
+            return 'Unknown';
+        }
 
         // Macro shortcuts
         const macros = {

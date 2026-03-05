@@ -725,6 +725,26 @@ body {
     border: 1px solid rgba(255, 71, 87, 0.35);
 }
 
+.cron-led {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: auto;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.cron-led.active {
+    background: #00ff88;
+    box-shadow: 0 0 8px #00ff88, 0 0 16px #00ff8866;
+}
+
+.cron-led.inactive {
+    background: #ff4757;
+    box-shadow: 0 0 8px #ff4757, 0 0 16px #ff475766;
+}
+
 .cron-empty {
     text-align: center;
     padding: 24px;
@@ -857,4 +877,10 @@ body {
 .kb-cat-count {
     font-weight: 600;
     color: var(--text-primary);
+}
+
+.cron-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
