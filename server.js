@@ -11,6 +11,10 @@ const path = require('path');
 const VERSION = 'v0.2.260302.6';
 const PORT = process.env.PORT || 3000;
 
+// CPU cache - poll less frequently to avoid self-induced CPU spikes
+let cpuCache = { usage: 15, timestamp: 0 };
+const CPU_POLL_INTERVAL = 10000; // Poll every 10 seconds
+
 const DATA_DIR = path.join(__dirname, 'data');
 const USAGE_FILE = path.join(DATA_DIR, 'usage.json');
 const ALL_MODELS = ['MiniMax-M2.5', 'gpt-5.3-codex', 'claude-sonnet-4-6'];
@@ -112,7 +116,7 @@ app.get('/api/gateway/:method', async (req, res) => {
 
 app.get('/api/system', async (req, res) => {
     try {
-        const [uptimeResult, topOutput, macmonData, memPressure] = await Promise.all([
+        const [uptimeResult, macmonData, memPressure] = await Promise.all([
             new Promise((resolve) => exec('uptime', (err, stdout) => {
                 const dayMatch = stdout.match(/up\s+(\d+)\s+days?/);
                 const timeMatch = stdout.match(/,\s+(\d+):(\d+)/);
@@ -120,13 +124,6 @@ app.get('/api/system', async (req, res) => {
                 if (dayMatch) totalSec += parseInt(dayMatch[1]) * 86400;
                 if (timeMatch) totalSec += parseInt(timeMatch[1]) * 3600 + parseInt(timeMatch[2]) * 60;
                 resolve(totalSec);
-            })),
-            new Promise((resolve) => exec('top -l 2 -n 0 2>/dev/null | grep "CPU usage"', (err, stdout) => {
-                const lines = stdout.trim().split('\n');
-                // Second iteration gives more accurate current usage
-                const lastLine = lines[lines.length - 1] || '';
-                const match = lastLine.match(/(\d+\.?\d*)% user, (\d+\.?\d*)% sys/);
-                resolve(match ? Math.round(parseFloat(match[1]) + parseFloat(match[2])) : 15);
             })),
             new Promise((resolve) => {
                 // Try smctemp first (works on Apple Silicon)
@@ -183,7 +180,20 @@ app.get('/api/system', async (req, res) => {
             })
         ]);
 
-        const cpuUsage = topOutput;
+        // CPU: use cached value (polled less frequently to avoid self-induced spikes)
+        const now = Date.now();
+        if (now - cpuCache.timestamp > CPU_POLL_INTERVAL) {
+            cpuCache = await new Promise((resolve) => {
+                exec('top -l 2 -n 0 2>/dev/null | grep "CPU usage"', (err, stdout) => {
+                    const lines = stdout.trim().split('\n');
+                    const lastLine = lines[lines.length - 1] || '';
+                    const match = lastLine.match(/(\d+\.?\d*)% user, (\d+\.?\d*)% sys/);
+                    const usage = match ? Math.round(parseFloat(match[1]) + parseFloat(match[2])) : 15;
+                    resolve({ usage, timestamp: Date.now() });
+                });
+            });
+        }
+        const cpuUsage = cpuCache.usage;
         const cpuTemp = macmonData?.temp?.cpu_temp_avg ? Math.round(macmonData.temp.cpu_temp_avg) : null;
         const gpuTemp = macmonData?.temp?.gpu_temp_avg ? Math.round(macmonData.temp.gpu_temp_avg) : null;
 
