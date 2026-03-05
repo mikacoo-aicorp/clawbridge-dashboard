@@ -11,9 +11,25 @@ const path = require('path');
 const VERSION = 'v0.2.260302.6';
 const PORT = process.env.PORT || 3000;
 
-// CPU cache - poll less frequently to avoid self-induced CPU spikes
+// CPU cache - pre-polled in background to avoid self-induced CPU spikes
 let cpuCache = { usage: 15, timestamp: 0 };
-const CPU_POLL_INTERVAL = 10000; // Poll every 10 seconds
+
+// Background CPU poller - runs independently to avoid API-request-induced spikes
+function pollCpu() {
+    exec('top -l 2 -n 0 2>/dev/null | grep "CPU usage"', (err, stdout) => {
+        const lines = stdout.trim().split('\n');
+        const lastLine = lines[lines.length - 1] || '';
+        const match = lastLine.match(/(\d+\.?\d*)% user, (\d+\.?\d*)% sys/);
+        cpuCache = {
+            usage: match ? Math.round(parseFloat(match[1]) + parseFloat(match[2])) : 15,
+            timestamp: Date.now()
+        };
+    });
+}
+
+// Poll immediately on startup, then every 5 seconds
+pollCpu();
+setInterval(pollCpu, 5000);
 
 const DATA_DIR = path.join(__dirname, 'data');
 const USAGE_FILE = path.join(DATA_DIR, 'usage.json');
@@ -180,19 +196,7 @@ app.get('/api/system', async (req, res) => {
             })
         ]);
 
-        // CPU: use cached value (polled less frequently to avoid self-induced spikes)
-        const now = Date.now();
-        if (now - cpuCache.timestamp > CPU_POLL_INTERVAL) {
-            cpuCache = await new Promise((resolve) => {
-                exec('top -l 2 -n 0 2>/dev/null | grep "CPU usage"', (err, stdout) => {
-                    const lines = stdout.trim().split('\n');
-                    const lastLine = lines[lines.length - 1] || '';
-                    const match = lastLine.match(/(\d+\.?\d*)% user, (\d+\.?\d*)% sys/);
-                    const usage = match ? Math.round(parseFloat(match[1]) + parseFloat(match[2])) : 15;
-                    resolve({ usage, timestamp: Date.now() });
-                });
-            });
-        }
+        // CPU: use pre-cached value (background poller keeps it updated)
         const cpuUsage = cpuCache.usage;
         const cpuTemp = macmonData?.temp?.cpu_temp_avg ? Math.round(macmonData.temp.cpu_temp_avg) : null;
         const gpuTemp = macmonData?.temp?.gpu_temp_avg ? Math.round(macmonData.temp.gpu_temp_avg) : null;
@@ -274,7 +278,8 @@ app.get('/api/cron', async (req, res) => {
                 name: job.name,
                 schedule,
                 nextRun: job.state?.nextRunAtMs,
-                enabled: job.enabled
+                enabled: job.enabled,
+                message: job.payload?.message || ''
             };
         });
         res.json({ jobs });

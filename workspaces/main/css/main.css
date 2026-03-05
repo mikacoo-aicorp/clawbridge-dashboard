@@ -89,7 +89,7 @@ body {
 }
 
 .logo-text {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 700;
     letter-spacing: 4px;
     color: var(--accent-cyan);
@@ -196,6 +196,30 @@ body {
 .module-badge.active {
     background: rgba(0, 255, 136, 0.1);
     color: var(--accent-green);
+}
+
+.module-refresh {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 25px;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-right: auto;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    opacity: 0.6;
+}
+
+.module-refresh:hover {
+    background: var(--bg-tertiary);
+    opacity: 1;
+    color: var(--text-primary);
+}
+
+.module-refresh:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
 }
 
 /* Stats Grid within modules */
@@ -583,6 +607,29 @@ body {
     transition: var(--transition);
 }
 
+.cron-item.expandable {
+    cursor: pointer;
+}
+
+.cron-item.expandable:hover {
+    border-color: var(--text-secondary);
+}
+
+.cron-item .cron-message {
+    display: none;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    white-space: pre-wrap;
+}
+
+.cron-item.expanded .cron-message {
+    display: block;
+}
+
 .cron-item.new {
     border-color: var(--accent-green);
     animation: cronPulse 1s ease-out;
@@ -602,9 +649,19 @@ body {
 
 .cron-schedule {
     font-size: 11px;
-    color: var(--accent-cyan);
+    color: #5a9ea8;
     font-weight: 600;
     margin-bottom: 4px;
+}
+
+.cron-name {
+    font-size: 13px;
+    color: var(--text-primary);
+}
+
+.cron-next {
+    font-size: 11px;
+    color: var(--text-secondary);
 }
 
 .cron-command {
@@ -682,6 +739,14 @@ body {
     text-align: center;
 }
 
+.usage-total-tokens {
+    text-align: center;
+}
+
+.usage-sessions {
+    text-align: center;
+}
+
 .usage-cost-label,
 .usage-tokens-label,
 .usage-sessions-label {
@@ -693,7 +758,7 @@ body {
 }
 
 .usage-cost-value {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 700;
     color: var(--accent-green);
 }
@@ -702,12 +767,14 @@ body {
     font-size: 16px;
     font-weight: 600;
     color: var(--accent-cyan);
+    text-align: center;
 }
 
 .usage-sessions-value {
     font-size: 16px;
     font-weight: 600;
     color: var(--accent-orange);
+    text-align: center;
 }
 
 .usage-models {

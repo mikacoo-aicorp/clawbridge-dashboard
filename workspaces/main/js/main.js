@@ -43,12 +43,19 @@ class NexusDashboard {
             const moduleEl = document.createElement('div');
             moduleEl.className = 'module';
             moduleEl.id = `module-${key}`;
+            
+            // Add refresh button for system and usage modules
+            const refreshBtn = (key === 'system' || key === 'usage') 
+                ? `<button class="module-refresh" data-module="${key}" title="Refresh">⟳</button>` 
+                : '';
+            
             moduleEl.innerHTML = `
                 <div class="module-header">
                     <div class="module-title">
                         <span class="icon">${mod.icon}</span>
                         <span>${mod.title}</span>
                     </div>
+                    ${refreshBtn}
                     <span class="module-badge">Loading</span>
                 </div>
                 <div class="module-content">
@@ -56,6 +63,15 @@ class NexusDashboard {
                 </div>
             `;
             dashboard.appendChild(moduleEl);
+        });
+        
+        // Add click handlers for refresh buttons
+        document.querySelectorAll('.module-refresh').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const moduleKey = btn.dataset.module;
+                this.refreshModule(moduleKey);
+            });
         });
     }
 
@@ -417,15 +433,18 @@ class NexusDashboard {
             const statusLed = job.enabled 
                 ? '<span class="cron-led active"></span>' 
                 : '<span class="cron-led inactive"></span>';
+            const message = job.message || '';
+            const hasMessage = message.trim().length > 0;
             
             return `
-                <div class="cron-item${isNew ? ' new' : ''}">
+                <div class="cron-item${isNew ? ' new' : ''}${hasMessage ? ' expandable' : ''}"${hasMessage ? ` onclick="this.classList.toggle('expanded')"` : ''}>
                     <div class="cron-header">
                         <span class="cron-name">${this.escapeHtml(job.name || 'Unnamed')}</span>
                         ${statusLed}
                     </div>
                     <div class="cron-schedule">${scheduleDesc}</div>
                     <div class="cron-next">Next: ${nextRun}</div>
+                    ${hasMessage ? `<div class="cron-message">${this.escapeHtml(message)}</div>` : ''}
                     ${isNew ? '<span class="cron-badge new-badge">NEW</span>' : ''}
                 </div>
             `;
@@ -486,6 +505,7 @@ class NexusDashboard {
 
         const [min, hour, day, month, dow] = parts;
 
+        // Common patterns
         if (min === '*' && hour === '*' && day === '*' && month === '*' && dow === '*') {
             return 'Every minute';
         }
@@ -495,11 +515,29 @@ class NexusDashboard {
         if (min === '0' && hour === '0' && day === '*' && month === '*' && dow === '*') {
             return 'Daily at midnight';
         }
+        
+        // Specific daily times: "0 3 * * *" → "Daily at 03:00"
         if (/^\d+$/.test(min) && /^\d+$/.test(hour) && day === '*' && month === '*' && dow === '*') {
             return `Daily at ${hour.padStart(2, '0')}:${min.padStart(2, '0')}`;
         }
+        
+        // Every N hours: "0 */3 * * *" → "Every 3 hours"
+        if (min === '0' && /^\*\/\d+$/.test(hour) && day === '*' && month === '*' && dow === '*') {
+            const hrs = hour.slice(2);
+            return `Every ${hrs} hours`;
+        }
+        
+        // Every N minutes: "*/5 * * * *" → "Every 5 min"
         if (/^\*\/\d+$/.test(min) && hour === '*' && day === '*' && month === '*' && dow === '*') {
-            return `Every ${min.slice(2)} min`;
+            const mins = min.slice(2);
+            return `Every ${mins} min`;
+        }
+        
+        // Weekly: "0 23 * * 0" → "Weekly on Sunday at 23:00"
+        if (/^\d+$/.test(min) && /^\d+$/.test(hour) && day === '*' && month === '*' && /^\d+$/.test(dow)) {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const dayName = days[parseInt(dow)] || `Day ${dow}`;
+            return `Weekly on ${dayName} at ${hour.padStart(2, '0')}:${min.padStart(2, '0')}`;
         }
 
         // Fallback: raw schedule
@@ -593,6 +631,35 @@ class NexusDashboard {
         contentEl.innerHTML = `<div class="error-message">${message}</div>`;
         badgeEl.textContent = 'Error';
         badgeEl.style.color = 'var(--accent-red)';
+    }
+
+    // Refresh a single module (for manual refresh button)
+    async refreshModule(moduleKey) {
+        const moduleEl = document.getElementById(`module-${moduleKey}`);
+        if (!moduleEl) return;
+        
+        const btn = moduleEl.querySelector('.module-refresh');
+        if (btn) btn.disabled = true;
+        
+        try {
+            const url = moduleKey === 'system' ? '/api/system' : '/api/usage';
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const data = await response.json();
+            this.data[moduleKey] = data;
+            
+            const contentEl = moduleEl.querySelector('.module-content');
+            if (moduleKey === 'system') {
+                contentEl.innerHTML = this.renderSystem(data);
+            } else if (moduleKey === 'usage') {
+                contentEl.innerHTML = this.renderUsage(data);
+            }
+        } catch (error) {
+            console.error(`Error refreshing ${moduleKey}:`, error);
+        } finally {
+            if (btn) btn.disabled = false;
+        }
     }
 
     // Auto-refresh - different intervals for different metrics
@@ -760,8 +827,8 @@ class NexusDashboard {
     // Utility: Format tokens
     formatTokens(tokens) {
         if (!tokens) return '0';
-        if (tokens >= 1000000) return `${(tokens / 1000000).toFixed(1)}M`;
-        if (tokens >= 1000) return `${(tokens / 1000).toFixed(1)}k`;
+        if (tokens >= 1000000) return `${(tokens / 1000000).toFixed(2)}M`;
+        if (tokens >= 1000) return `${(tokens / 1000).toFixed(2)}k`;
         return tokens;
     }
 

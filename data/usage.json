@@ -3,8 +3,8 @@
   "lastReset": "2026-03-01",
   "models": {
     "MiniMax-M2.5": {
-      "inputTokens": 26069733,
-      "outputTokens": 74457
+      "inputTokens": 42944751,
+      "outputTokens": 108513
     },
     "claude-sonnet-4-6": {
       "inputTokens": 0,
@@ -24,9 +24,9 @@
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 294,
-      "outputTokens": 122,
-      "updatedAt": 1772719394619
+      "inputTokens": 322,
+      "outputTokens": 185,
+      "updatedAt": 1772740994623
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:520ec8df-4cbf-4f91-bcf7-c57c170b1bd8": {
       "model": "MiniMax-M2.5",
@@ -36,9 +36,9 @@
     },
     "agent:main:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 749946,
-      "outputTokens": 1193,
-      "updatedAt": 1772729284704
+      "inputTokens": 843590,
+      "outputTokens": 579,
+      "updatedAt": 1772746782726
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:dfbf41d3-73db-499b-bbb6-0504dd4f185f": {
       "model": "MiniMax-M2.5",
@@ -60,9 +60,9 @@
     },
     "agent:turing:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 63514,
-      "outputTokens": 371,
-      "updatedAt": 1772729037361
+      "inputTokens": 455204,
+      "outputTokens": 799,
+      "updatedAt": 1772746964636
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:16a04755-a9e6-44a0-8a55-047e77bfea21": {
       "model": "MiniMax-M2.5",
@@ -393,6 +393,18 @@
       "inputTokens": 294,
       "outputTokens": 122,
       "updatedAt": 1772719394619
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:a9535c88-389d-47b4-bb4f-901c0274041e": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 290,
+      "outputTokens": 125,
+      "updatedAt": 1772730194618
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:f0d5f14a-3dc1-47c4-8c69-5ad821ed2caf": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 322,
+      "outputTokens": 185,
+      "updatedAt": 1772740994623
     }
   },
   "days": {
@@ -491,8 +503,8 @@
     "2026-03-05": {
       "models": {
         "MiniMax-M2.5": {
-          "inputTokens": 26069733,
-          "outputTokens": 74457,
+          "inputTokens": 42944751,
+          "outputTokens": 108513,
           "cost": null
         },
         "gpt-5.3-codex": {
@@ -507,9 +519,9 @@
         }
       },
       "totalCost": 0.27,
-      "totalTokens": 26231703,
+      "totalTokens": 43140777,
       "sessionCount": 20,
-      "timestamp": "2026-03-05T16:48:57.152Z"
+      "timestamp": "2026-03-05T21:42:47.594Z"
     }
   }
 }
