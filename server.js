@@ -135,7 +135,7 @@ app.get('/api/system', async (req, res) => {
         const [uptimeResult, macmonData, memPressure] = await Promise.all([
             new Promise((resolve) => exec('uptime', (err, stdout) => {
                 const dayMatch = stdout.match(/up\s+(\d+)\s+days?/);
-                const timeMatch = stdout.match(/,\s+(\d+):(\d+)/);
+                const timeMatch = stdout.match(/up\s+(\d+):(\d+)/);
                 let totalSec = 0;
                 if (dayMatch) totalSec += parseInt(dayMatch[1]) * 86400;
                 if (timeMatch) totalSec += parseInt(timeMatch[1]) * 3600 + parseInt(timeMatch[2]) * 60;

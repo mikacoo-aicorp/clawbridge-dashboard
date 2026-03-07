@@ -3,8 +3,8 @@
   "lastReset": "2026-03-01",
   "models": {
     "MiniMax-M2.5": {
-      "inputTokens": 42944751,
-      "outputTokens": 108513
+      "inputTokens": 55487247,
+      "outputTokens": 183415
     },
     "claude-sonnet-4-6": {
       "inputTokens": 0,
@@ -24,9 +24,9 @@
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 322,
-      "outputTokens": 185,
-      "updatedAt": 1772740994623
+      "inputTokens": 333,
+      "outputTokens": 181,
+      "updatedAt": 1772924594621
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:520ec8df-4cbf-4f91-bcf7-c57c170b1bd8": {
       "model": "MiniMax-M2.5",
@@ -36,9 +36,9 @@
     },
     "agent:main:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 843590,
-      "outputTokens": 579,
-      "updatedAt": 1772746782726
+      "inputTokens": 227104,
+      "outputTokens": 1105,
+      "updatedAt": 1772927056553
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:dfbf41d3-73db-499b-bbb6-0504dd4f185f": {
       "model": "MiniMax-M2.5",
@@ -60,9 +60,9 @@
     },
     "agent:turing:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 455204,
-      "outputTokens": 799,
-      "updatedAt": 1772746964636
+      "inputTokens": 943716,
+      "outputTokens": 2651,
+      "updatedAt": 1772927164890
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:16a04755-a9e6-44a0-8a55-047e77bfea21": {
       "model": "MiniMax-M2.5",
@@ -78,9 +78,9 @@
     },
     "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 536,
-      "outputTokens": 184,
-      "updatedAt": 1772676000016
+      "inputTokens": 238,
+      "outputTokens": 91,
+      "updatedAt": 1772848800009
     },
     "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d:run:da74bb49-e90d-46aa-b747-3fa06e6d8c5a": {
       "model": "MiniMax-M2.5",
@@ -102,9 +102,9 @@
     },
     "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 337,
-      "outputTokens": 112,
-      "updatedAt": 1772697600017
+      "inputTokens": 327,
+      "outputTokens": 109,
+      "updatedAt": 1772870400012
     },
     "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:82079f6e-9210-40f2-b1a9-0b304a2c130f": {
       "model": "MiniMax-M2.5",
@@ -405,6 +405,180 @@
       "inputTokens": 322,
       "outputTokens": 185,
       "updatedAt": 1772740994623
+    },
+    "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 329,
+      "outputTokens": 138,
+      "updatedAt": 1772920800013
+    },
+    "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f:run:ecb4682c-1635-41ee-adc0-e6737336fbbf": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 331,
+      "outputTokens": 115,
+      "updatedAt": 1772748000069
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:a254e432-1c25-4cb8-8bef-df3db7e72320": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 322,
+      "outputTokens": 146,
+      "updatedAt": 1772751794621
+    },
+    "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d:run:3a5b7d97-76ee-4cb4-af6c-f876ffb5a037": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 249,
+      "outputTokens": 110,
+      "updatedAt": 1772762400014
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:bed51a26-cb3e-4d43-a0fc-810563dccdc6": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 331,
+      "outputTokens": 166,
+      "updatedAt": 1772762594619
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:154a5b6d-b752-405f-9884-c5479c1b8f8f": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 5043,
+      "outputTokens": 533,
+      "updatedAt": 1772773394621
+    },
+    "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:ca7af860-5424-401e-97b4-615ec9b0675a": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 338,
+      "outputTokens": 124,
+      "updatedAt": 1772784000016
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:19105687-cb40-4f00-9538-d821c995a796": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 284,
+      "outputTokens": 126,
+      "updatedAt": 1772784194620
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:eab2f5df-566a-4027-a77c-a35ada7f4b6c": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 331,
+      "outputTokens": 176,
+      "updatedAt": 1772794994614
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:fac6063d-2d39-4210-b440-15d8fceb9f3d": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 297,
+      "outputTokens": 138,
+      "updatedAt": 1772805794623
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:37a42022-d5da-4842-9324-e50c4f363a52": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 296,
+      "outputTokens": 157,
+      "updatedAt": 1772816594621
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:bd26cf0e-47b2-4e6b-8baf-74de03473e4d": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 294,
+      "outputTokens": 128,
+      "updatedAt": 1772827394620
+    },
+    "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f:run:ef1425e5-4c9b-43b6-8ea6-e1af15978b4c": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 329,
+      "outputTokens": 133,
+      "updatedAt": 1772834400015
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:c5cd5a4d-9061-4502-8c09-a317e6279a96": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 300,
+      "outputTokens": 141,
+      "updatedAt": 1772838194619
+    },
+    "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d:run:7c8e4a80-ac67-4acd-b1fb-4cdf4f770715": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 238,
+      "outputTokens": 91,
+      "updatedAt": 1772848800009
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:0854c77e-9278-4a07-81f5-6ae36c3e03a6": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 305,
+      "outputTokens": 164,
+      "updatedAt": 1772848994616
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:bc20239a-eb3b-426b-b4ff-d3ad78c36aa3": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 302,
+      "outputTokens": 167,
+      "updatedAt": 1772859794620
+    },
+    "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:4ffc0ecf-fd52-478c-9ec3-bbc0cc6f99ee": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 327,
+      "outputTokens": 109,
+      "updatedAt": 1772870400012
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:7bc54cb6-adb1-4e1a-b794-1f4562c5ffb2": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 323,
+      "outputTokens": 149,
+      "updatedAt": 1772870594616
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:7df56e05-09e9-4a84-a21e-2bb263492119": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 325,
+      "outputTokens": 185,
+      "updatedAt": 1772881394620
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:0b2cd5c1-6ad7-4ba8-96db-fdebf6459bee": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 294,
+      "outputTokens": 130,
+      "updatedAt": 1772892194622
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:3d2af91c-14d9-42df-9754-c265af7ea027": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 350,
+      "outputTokens": 184,
+      "updatedAt": 1772902994619
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:cadd6283-0aff-4b95-9db3-379dddf2a078": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 293,
+      "outputTokens": 137,
+      "updatedAt": 1772913794621
+    },
+    "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f:run:ec0c4180-1fd1-495b-bdbf-fca63434b6a0": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 329,
+      "outputTokens": 138,
+      "updatedAt": 1772920800013
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:456c29cf-c82b-4252-a4b0-8461fef32e27": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 333,
+      "outputTokens": 181,
+      "updatedAt": 1772924594621
+    },
+    "agent:turing:subagent:c8283e43-da48-4e4a-9038-21dee42bf7ae": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 87787,
+      "outputTokens": 4409,
+      "updatedAt": 1772925616847
+    },
+    "agent:turing:subagent:c38f9411-3c49-4a91-8c9a-1b56e8f1672e": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 334510,
+      "outputTokens": 10070,
+      "updatedAt": 1772925623772
+    },
+    "agent:turing:subagent:ab018ef1-d19b-46b7-ac73-3f799923f24a": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 44753,
+      "outputTokens": 1976,
+      "updatedAt": 1772925927440
+    },
+    "agent:turing:subagent:f9154d92-f49a-4a88-904e-f5c56c785625": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 628123,
+      "outputTokens": 11359,
+      "updatedAt": 1772925995617
     }
   },
   "days": {
@@ -503,8 +677,8 @@
     "2026-03-05": {
       "models": {
         "MiniMax-M2.5": {
-          "inputTokens": 42944751,
-          "outputTokens": 108513,
+          "inputTokens": 44054709,
+          "outputTokens": 110398,
           "cost": null
         },
         "gpt-5.3-codex": {
@@ -519,9 +693,55 @@
         }
       },
       "totalCost": 0.27,
-      "totalTokens": 43140777,
-      "sessionCount": 20,
-      "timestamp": "2026-03-05T21:42:47.594Z"
+      "totalTokens": 44252620,
+      "sessionCount": 22,
+      "timestamp": "2026-03-05T23:59:47.568Z"
+    },
+    "2026-03-06": {
+      "models": {
+        "MiniMax-M2.5": {
+          "inputTokens": 49595132,
+          "outputTokens": 129518,
+          "cost": null
+        },
+        "gpt-5.3-codex": {
+          "inputTokens": 77982,
+          "outputTokens": 9531,
+          "cost": 0.27
+        },
+        "claude-sonnet-4-6": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "cost": 0
+        }
+      },
+      "totalCost": 0.27,
+      "totalTokens": 49812163,
+      "sessionCount": 21,
+      "timestamp": "2026-03-06T23:59:48.042Z"
+    },
+    "2026-03-07": {
+      "models": {
+        "MiniMax-M2.5": {
+          "inputTokens": 55487247,
+          "outputTokens": 183415,
+          "cost": null
+        },
+        "gpt-5.3-codex": {
+          "inputTokens": 77982,
+          "outputTokens": 9531,
+          "cost": 0.27
+        },
+        "claude-sonnet-4-6": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "cost": 0
+        }
+      },
+      "totalCost": 0.27,
+      "totalTokens": 55758175,
+      "sessionCount": 25,
+      "timestamp": "2026-03-07T23:46:09.989Z"
     }
   }
 }

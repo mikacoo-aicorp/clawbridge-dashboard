@@ -12,41 +12,29 @@ const CONFIG = {
     
     // Module configuration - enable/disable modules here
     modules: {
-        health: {
+        gatewaySystem: {
             enabled: true,
-            title: 'Gateway',
-            icon: '🌐',
+            title: 'System Status',
+            icon: '⚡',
             order: 1
         },
-        system: {
+        apiAgents: {
             enabled: true,
-            title: 'System Overview',
-            icon: '⚡',
+            title: 'API & Agent Stats',
+            icon: '📊',
             order: 2
-        },
-        usage: {
-            enabled: true,
-            title: 'API Usage',
-            icon: '💰',
-            order: 3
-        },
-        status: {
-            enabled: true,
-            title: 'Agents & Sessions',
-            icon: '🤖',
-            order: 4
         },
         cron: {
             enabled: true,
             title: 'Cron Jobs',
             icon: '⏰',
-            order: 5
+            order: 3
         },
         knowledge: {
             enabled: true,
             title: 'Knowledge Base',
             icon: '📚',
-            order: 6
+            order: 4
         }
     },
     

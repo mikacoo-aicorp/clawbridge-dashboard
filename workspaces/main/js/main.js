@@ -44,8 +44,8 @@ class NexusDashboard {
             moduleEl.className = 'module';
             moduleEl.id = `module-${key}`;
             
-            // Add refresh button for system and usage modules
-            const refreshBtn = (key === 'system' || key === 'usage') 
+            // Add refresh button for merged modules
+            const refreshBtn = (key === 'gatewaySystem' || key === 'apiAgents') 
                 ? `<button class="module-refresh" data-module="${key}" title="Refresh">⟳</button>` 
                 : '';
             
@@ -93,7 +93,15 @@ class NexusDashboard {
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
                 this.data[key] = data;
-                this.renderModule(key, data);
+                
+                // Render merged modules when their sub-data is ready
+                if (key === 'health' || key === 'system') {
+                    this.renderModule('gatewaySystem', data);
+                } else if (key === 'status' || key === 'usage') {
+                    this.renderModule('apiAgents', data);
+                } else {
+                    this.renderModule(key, data);
+                }
                 
                 // Update footer version
                 if (key === 'dashboardVersion' && data.version) {
@@ -132,27 +140,235 @@ class NexusDashboard {
 
         try {
             switch (key) {
-                case 'health':
-                    contentEl.innerHTML = this.renderHealth(data);
-                    badgeEl.textContent = data.ok ? 'OK' : 'Error';
-                    badgeEl.classList.toggle('active', !!data.ok);
-                    badgeEl.style.color = data.ok ? '' : 'var(--accent-red)';
+                case 'gatewaySystem': {
+                    // Render both Gateway health and System Overview
+                    const healthData = this.data.health || {};
+                    const systemData = this.data.system || {};
+                    
+                    // Gateway health section
+                    const isHealthy = healthData.ok === true;
+                    const versionData = this.data.version || {};
+                    const version = versionData.version || 'Unknown';
+                    
+                    const channels = healthData.channels || healthData.Channels || {};
+                    const channelHTML = Object.entries(channels).map(([name, ch]) => {
+                        const isActive = ch?.configured && ch?.probe?.ok;
+                        return `
+                        <div class="stat-item">
+                            <div class="stat-label">${name}</div>
+                            <div class="stat-value ${isActive ? 'green' : 'orange'}">
+                                ${isActive ? 'Active' : 'Inactive'}
+                            </div>
+                        </div>
+                    `;
+                    }).join('');
+
+                    // System stats
+                    let cpu = 0, memUsed = 0, memTotal = 32, memPercent = 0, diskUsed = 0, diskTotal = 460, diskPercent = 0, uptime = 0;
+                    if (systemData.os) uptime = systemData.os?.Uptime || 0;
+                    if (systemData.cpu) cpu = typeof systemData.cpu.usage === 'number' ? systemData.cpu.usage : 0;
+                    if (systemData.memory) {
+                        const mem = systemData.memory;
+                        memUsed = parseFloat(mem.used) || 0;
+                        memTotal = mem.total || 32;
+                        memPercent = mem.percent || Math.round((memUsed / memTotal) * 100);
+                    }
+                    if (systemData.disk && Array.isArray(systemData.disk)) {
+                        const rootDisk = systemData.disk.find(d => d.mount === '/') || systemData.disk[0];
+                        if (rootDisk) {
+                            diskUsed = rootDisk.used || 0;
+                            diskTotal = rootDisk.total || 460;
+                            diskPercent = rootDisk.percent || Math.round((diskUsed / diskTotal) * 100);
+                        }
+                    }
+                    const uptimeStr = this.formatUptime(uptime);
+                    const cpuTemp = this.getCpuTemperature(systemData);
+
+                    contentEl.innerHTML = `
+                        <div class="merged-section">
+                            <div class="section-header">
+                                <span class="section-icon">🌐</span>
+                                <span class="section-title">Gateway</span>
+                            </div>
+                            <div class="gateway-health">
+                                <div class="health-status ${isHealthy ? 'healthy' : 'error'}">
+                                    ${isHealthy ? 'Healthy' : 'Error'}
+                                </div>
+                                <div class="version-info">OpenClaw ${version}</div>
+                            </div>
+                            <div class="channel-subheading">Channels</div>
+                            <div class="stats-grid">
+                                ${channelHTML || '<div class="stat-item"><div class="stat-label">No channels</div></div>'}
+                            </div>
+                        </div>
+                        <div class="merged-section">
+                            <div class="section-header">
+                                <span class="section-icon">⚡</span>
+                                <span class="section-title">System Overview</span>
+                            </div>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-label" style="text-align:center">CPU Usage</div>
+                                    <div class="stat-value" id="cpu-value" style="text-align:center">${cpu}%</div>
+                                    <div class="progress-bar"><div class="progress-fill" id="cpu-bar" style="width: ${cpu}%"></div></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label" style="text-align:center">CPU Temp</div>
+                                    <div class="stat-value" id="cpu-temp-value" style="text-align:center;color:${this.getTempColor(cpuTemp)}">${this.formatTemperature(cpuTemp)}</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label" style="text-align:center">Memory</div>
+                                    <div class="stat-value" id="memory-value" style="text-align:center">${memUsed.toFixed(1)}/${memTotal} GB</div>
+                                    <div class="progress-bar"><div class="progress-fill" id="memory-bar" style="width: ${memPercent}%"></div></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label" style="text-align:center">Disk</div>
+                                    <div class="stat-value" id="disk-value" style="text-align:center">${diskUsed}/${diskTotal} GB</div>
+                                    <div class="progress-bar"><div class="progress-fill" id="disk-bar" style="width: ${diskPercent}%"></div></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label" style="text-align:center">Uptime</div>
+                                    <div class="stat-value" id="uptime-value" style="text-align:center">${uptimeStr}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Update badge based on both health and system status
+                    const allOk = isHealthy;
+                    badgeEl.textContent = allOk ? 'OK' : 'Error';
+                    badgeEl.classList.toggle('active', !!allOk);
+                    badgeEl.style.color = allOk ? '' : 'var(--accent-red)';
                     break;
-                case 'status':
-                    contentEl.innerHTML = this.renderStatus(data);
-                    badgeEl.textContent = 'OK';
+                }
+                
+                case 'apiAgents': {
+                    // Render both API Usage and Agents & Sessions
+                    const usageData = this.data.usage || {};
+                    const statusData = this.data.status || {};
+                    
+                    // Usage section
+                    const models = usageData.models || {};
+                    const totalCost = usageData.totalCost || 0;
+                    const totalTokens = usageData.totalTokens || 0;
+                    const sessionCount = usageData.sessionCount || 0;
+                    
+                    const modelNames = {
+                        'MiniMax-M2.5': 'MiniMax M2.5',
+                        'claude-sonnet-4-6': 'Claude Sonnet 4.6',
+                        'gpt-5.3-codex': 'GPT Codex 5.3'
+                    };
+                    
+                    const modelIcons = {
+                        'MiniMax-M2.5': '🔵',
+                        'claude-sonnet-4-6': '🟣',
+                        'gpt-5.3-codex': '🟢'
+                    };
+                    
+                    const modelRows = Object.entries(models).map(([model, stats]) => {
+                        const name = modelNames[model] || model;
+                        const icon = modelIcons[model] || '⚪';
+                        const totalModelTokens = stats.inputTokens + stats.outputTokens;
+                        const costDisplay = stats.cost === null ? 'N/A' : `$${stats.cost.toFixed(3)}`;
+                        return `
+                            <div class="usage-model-row">
+                                <div class="usage-model-info">
+                                    <span class="usage-icon">${icon}</span>
+                                    <span class="usage-model-name">${name}</span>
+                                </div>
+                                <div class="usage-model-stats">
+                                    <div class="usage-tokens">${this.formatTokens(stats.inputTokens)} in + ${this.formatTokens(stats.outputTokens)} out</div>
+                                    <div class="usage-cost">${costDisplay}</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    const usageHTML = `
+                        <div class="usage-summary">
+                            <div class="usage-total-cost">
+                                <div class="usage-cost-label">Total Cost</div>
+                                <div class="usage-cost-value">$${totalCost.toFixed(2)}</div>
+                            </div>
+                            <div class="usage-total-tokens">
+                                <div class="usage-tokens-label">Total Tokens</div>
+                                <div class="usage-tokens-value">${this.formatTokens(totalTokens)}</div>
+                            </div>
+                            <div class="usage-sessions">
+                                <div class="usage-sessions-label">Sessions</div>
+                                <div class="usage-sessions-value">${sessionCount}</div>
+                            </div>
+                        </div>
+                        <div class="usage-models">
+                            ${modelRows || '<div class="usage-empty">No usage data</div>'}
+                        </div>
+                    `;
+                    
+                    // Agents section (from status data)
+                    const agents = statusData.sessions?.byAgent || [];
+                    const agentsHTML = agents.map((agent) => {
+                        const sessionsList = (agent.recent || []).map(session => {
+                            const fullKey = session.key;
+                            const shortKey = this.shortenSessionKey(fullKey);
+                            const needsExpansion = shortKey !== fullKey;
+                            return `
+                            <div class="session-item${needsExpansion ? ' expandable' : ''}"${needsExpansion ? ` onclick="this.classList.toggle('expanded'); this.querySelector('.session-key').textContent = this.classList.contains('expanded') ? '${fullKey}' : '${shortKey}'"` : ''}>
+                                <div class="session-key">${shortKey}</div>
+                                <div class="session-meta">
+                                    <span>${session.model || 'N/A'}</span>
+                                    <span>${this.formatTokens(session.totalTokens)} tokens</span>
+                                    <span>${this.formatAge(session.age)}</span>
+                                </div>
+                            </div>
+                        `;
+                        }).join('');
+                        
+                        return `
+                        <div class="agent-accordion">
+                            <div class="agent-accordion-header" onclick="this.classList.toggle('expanded'); this.nextElementSibling.classList.toggle('expanded');">
+                                <div class="agent-info">
+                                    <span class="accordion-arrow">▶</span>
+                                    <div class="agent-avatar">${agent.agentId.charAt(0).toUpperCase()}</div>
+                                    <span class="agent-name">${agent.agentId}</span>
+                                </div>
+                                <div class="agent-status">
+                                    <span class="dot"></span>
+                                    ${agent.count} session${agent.count !== 1 ? 's' : ''}
+                                </div>
+                            </div>
+                            <div class="agent-accordion-content">
+                                <div class="sessions-list">
+                                    ${sessionsList || '<div class="session-empty">No sessions</div>'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    }).join('');
+                    
+                    contentEl.innerHTML = `
+                        <div class="merged-section">
+                            <div class="section-header">
+                                <span class="section-icon">💰</span>
+                                <span class="section-title">API Usage</span>
+                            </div>
+                            ${usageHTML}
+                        </div>
+                        <div class="merged-section">
+                            <div class="section-header">
+                                <span class="section-icon">🤖</span>
+                                <span class="section-title">Agents & Sessions</span>
+                            </div>
+                            <div class="agents-accordion-container">
+                                ${agentsHTML || '<div class="stat-item">No agents</div>'}
+                            </div>
+                        </div>
+                    `;
+                    
+                    badgeEl.textContent = `$${totalCost.toFixed(2)}`;
                     badgeEl.classList.add('active');
                     break;
-                case 'system':
-                    contentEl.innerHTML = this.renderSystem(data);
-                    badgeEl.textContent = 'OK';
-                    badgeEl.classList.add('active');
-                    break;
-                case 'knowledge':
-                    contentEl.innerHTML = this.renderKnowledge(data);
-                    badgeEl.textContent = 'OK';
-                    badgeEl.classList.add('active');
-                    break;
+                }
+                
                 case 'cron': {
                     const jobs = data.jobs || [];
                     const changes = this.computeCronChanges(jobs);
@@ -171,13 +387,12 @@ class NexusDashboard {
                     }
                     break;
                 }
-                case 'usage': {
-                    contentEl.innerHTML = this.renderUsage(data);
-                    const totalCost = data.totalCost || 0;
-                    badgeEl.textContent = `$${totalCost.toFixed(2)}`;
+                
+                case 'knowledge':
+                    contentEl.innerHTML = this.renderKnowledge(data);
+                    badgeEl.textContent = 'OK';
                     badgeEl.classList.add('active');
                     break;
-                }
             }
         } catch (error) {
             this.renderError(key, error.message);
@@ -642,18 +857,30 @@ class NexusDashboard {
         if (btn) btn.disabled = true;
         
         try {
-            const url = moduleKey === 'system' ? '/api/system' : '/api/usage';
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
-            const data = await response.json();
-            this.data[moduleKey] = data;
-            
-            const contentEl = moduleEl.querySelector('.module-content');
-            if (moduleKey === 'system') {
-                contentEl.innerHTML = this.renderSystem(data);
-            } else if (moduleKey === 'usage') {
-                contentEl.innerHTML = this.renderUsage(data);
+            if (moduleKey === 'gatewaySystem') {
+                // Refresh both gateway health and system data
+                const [healthRes, systemRes] = await Promise.all([
+                    fetch('/api/gateway/health'),
+                    fetch('/api/system')
+                ]);
+                
+                if (healthRes.ok) this.data.health = await healthRes.json();
+                if (systemRes.ok) this.data.system = await systemRes.json();
+                
+                // Re-render the module
+                this.renderModule('gatewaySystem', {});
+            } else if (moduleKey === 'apiAgents') {
+                // Refresh both usage and status data
+                const [usageRes, statusRes] = await Promise.all([
+                    fetch('/api/usage'),
+                    fetch('/api/gateway/status')
+                ]);
+                
+                if (usageRes.ok) this.data.usage = await usageRes.json();
+                if (statusRes.ok) this.data.status = await statusRes.json();
+                
+                // Re-render the module
+                this.renderModule('apiAgents', {});
             }
         } catch (error) {
             console.error(`Error refreshing ${moduleKey}:`, error);
@@ -673,6 +900,9 @@ class NexusDashboard {
                     this.data.system = data;
                     this.updateSystemMetric('cpu', data.cpu?.usage || 0);
                     this.updateSystemMetric('temperature', this.getCpuTemperature(data));
+                    
+                    // Also re-render gatewaySystem module when system data changes
+                    this.renderModule('gatewaySystem', {});
                 }
             } catch (error) {
                 console.error('Error refreshing CPU:', error);
@@ -729,6 +959,8 @@ class NexusDashboard {
         // Usage refresh every 30 minutes (expensive API call)
         setInterval(async () => {
             await this.fetchUsageData();
+            // Re-render apiAgents when usage data is refreshed
+            this.renderModule('apiAgents', {});
         }, CONFIG.gateway.usageRefreshInterval);
     }
 
