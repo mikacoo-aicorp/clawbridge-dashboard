@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.2.260308.1 - 2026-03-08
+### Added
+- Merged modules: Gateway+System Overview → "System Status", API Usage+Agents → "API & Agent Stats"
+- Header refresh button (⟳) to refresh all modules without page reload
+- Agent activity indicators: Active (green pulsing dot) / Idle (gray dot) based on session recency
+- Updated module icons: System Status (⚡), API & Agent Stats (📊)
+- Cron format fix: "Every 3 days at 10:00" for Google Drive Backup
+- Fixed uptime display (was showing "--")
+- Gateway version now stacked below Healthy status (centered)
+
 ## v0.2.260302.6 - 2026-03-02
 ### Fixed
 - API Usage: Model name for Codex - gateway reports `gpt-5.3-codex`, not `openai-codex-5.3`
