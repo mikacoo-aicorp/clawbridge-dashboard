@@ -3,8 +3,8 @@
   "lastReset": "2026-03-01",
   "models": {
     "MiniMax-M2.5": {
-      "inputTokens": 55487247,
-      "outputTokens": 183415
+      "inputTokens": 75425468,
+      "outputTokens": 246496
     },
     "claude-sonnet-4-6": {
       "inputTokens": 0,
@@ -24,9 +24,9 @@
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 333,
-      "outputTokens": 181,
-      "updatedAt": 1772924594621
+      "inputTokens": 294,
+      "outputTokens": 129,
+      "updatedAt": 1772989394624
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:520ec8df-4cbf-4f91-bcf7-c57c170b1bd8": {
       "model": "MiniMax-M2.5",
@@ -36,9 +36,9 @@
     },
     "agent:main:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 227104,
-      "outputTokens": 1105,
-      "updatedAt": 1772927056553
+      "inputTokens": 228514,
+      "outputTokens": 939,
+      "updatedAt": 1772993322107
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:dfbf41d3-73db-499b-bbb6-0504dd4f185f": {
       "model": "MiniMax-M2.5",
@@ -48,9 +48,9 @@
     },
     "agent:warren:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 32,
-      "outputTokens": 97,
-      "updatedAt": 1772447243895
+      "inputTokens": 36,
+      "outputTokens": 36,
+      "updatedAt": 1772985530524
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:8a07149c-7db2-423b-8519-1517b66e532f": {
       "model": "MiniMax-M2.5",
@@ -60,9 +60,9 @@
     },
     "agent:turing:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 943716,
-      "outputTokens": 2651,
-      "updatedAt": 1772927164890
+      "inputTokens": 121869,
+      "outputTokens": 616,
+      "updatedAt": 1772993202238
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:16a04755-a9e6-44a0-8a55-047e77bfea21": {
       "model": "MiniMax-M2.5",
@@ -78,9 +78,9 @@
     },
     "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 238,
-      "outputTokens": 91,
-      "updatedAt": 1772848800009
+      "inputTokens": 259,
+      "outputTokens": 118,
+      "updatedAt": 1772935200013
     },
     "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d:run:da74bb49-e90d-46aa-b747-3fa06e6d8c5a": {
       "model": "MiniMax-M2.5",
@@ -102,9 +102,9 @@
     },
     "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 327,
-      "outputTokens": 109,
-      "updatedAt": 1772870400012
+      "inputTokens": 924,
+      "outputTokens": 274,
+      "updatedAt": 1772956800011
     },
     "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:82079f6e-9210-40f2-b1a9-0b304a2c130f": {
       "model": "MiniMax-M2.5",
@@ -378,9 +378,9 @@
     },
     "agent:main:cron:aa99d082-e1a8-4c44-9e40-d05fd88553d0": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 105648,
-      "outputTokens": 1845,
-      "updatedAt": 1772710910107
+      "inputTokens": 88487,
+      "outputTokens": 1464,
+      "updatedAt": 1772970110053
     },
     "agent:main:cron:aa99d082-e1a8-4c44-9e40-d05fd88553d0:run:8fba3b30-0704-4259-9816-5dc3cbbe7c1b": {
       "model": "MiniMax-M2.5",
@@ -579,6 +579,78 @@
       "inputTokens": 628123,
       "outputTokens": 11359,
       "updatedAt": 1772925995617
+    },
+    "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d:run:f75c3ab1-b524-4706-a153-f8bf3c02dbe4": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 259,
+      "outputTokens": 118,
+      "updatedAt": 1772935200013
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:37138e61-a422-4da5-b334-1eaf6a1cf297": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 302,
+      "outputTokens": 161,
+      "updatedAt": 1772935394616
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:70bdcda8-13f2-4766-be1c-b9c705749418": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 292,
+      "outputTokens": 142,
+      "updatedAt": 1772946194620
+    },
+    "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:f94630fd-877e-4f85-b286-c22be0e1b280": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 924,
+      "outputTokens": 274,
+      "updatedAt": 1772956800011
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:d501c267-9e1b-4e1d-befb-2b4cefb25ec1": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 291,
+      "outputTokens": 143,
+      "updatedAt": 1772956994618
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:fd82921b-d14c-4c26-8cb1-2fe0dc389558": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 302,
+      "outputTokens": 127,
+      "updatedAt": 1772967794620
+    },
+    "agent:main:cron:aa99d082-e1a8-4c44-9e40-d05fd88553d0:run:6dd233e9-98e6-4f28-81ec-a695c434740a": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 88487,
+      "outputTokens": 1464,
+      "updatedAt": 1772970110053
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:7d7c78ae-e73c-4058-967a-2817868a73fb": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 299,
+      "outputTokens": 134,
+      "updatedAt": 1772978594621
+    },
+    "agent:main:subagent:055af2c8-69c2-48f8-bea6-3922038a1e67": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 20,
+      "outputTokens": 82,
+      "updatedAt": 1772982795362
+    },
+    "agent:main:subagent:c6202c1f-c6ff-4c1a-8c54-729be0dd0814": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 20,
+      "outputTokens": 189,
+      "updatedAt": 1772983027986
+    },
+    "agent:scout:main": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 8656,
+      "outputTokens": 407,
+      "updatedAt": 1772988820824
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:bee0464e-f0aa-4958-bd1b-a96fe495bd20": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 294,
+      "outputTokens": 129,
+      "updatedAt": 1772989394624
     }
   },
   "days": {
@@ -723,8 +795,8 @@
     "2026-03-07": {
       "models": {
         "MiniMax-M2.5": {
-          "inputTokens": 55487247,
-          "outputTokens": 183415,
+          "inputTokens": 55640968,
+          "outputTokens": 185297,
           "cost": null
         },
         "gpt-5.3-codex": {
@@ -739,9 +811,32 @@
         }
       },
       "totalCost": 0.27,
-      "totalTokens": 55758175,
+      "totalTokens": 55913778,
       "sessionCount": 25,
-      "timestamp": "2026-03-07T23:46:09.989Z"
+      "timestamp": "2026-03-07T23:59:49.723Z"
+    },
+    "2026-03-08": {
+      "models": {
+        "MiniMax-M2.5": {
+          "inputTokens": 75425468,
+          "outputTokens": 246496,
+          "cost": null
+        },
+        "gpt-5.3-codex": {
+          "inputTokens": 77982,
+          "outputTokens": 9531,
+          "cost": 0.27
+        },
+        "claude-sonnet-4-6": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "cost": 0
+        }
+      },
+      "totalCost": 0.27,
+      "totalTokens": 75759477,
+      "sessionCount": 21,
+      "timestamp": "2026-03-08T18:10:01.956Z"
     }
   }
 }

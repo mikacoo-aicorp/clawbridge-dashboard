@@ -7,6 +7,7 @@ class NexusDashboard {
         this.apiBase = ''; // Will be set automatically
         this.cronPreviousJobs = [];
         this.cronHasSnapshot = false;
+        this.agentNames = { 'main': 'mika' };
         this.init();
     }
 
@@ -347,8 +348,8 @@ class NexusDashboard {
                             <div class="agent-accordion-header" onclick="this.classList.toggle('expanded'); this.nextElementSibling.classList.toggle('expanded');">
                                 <div class="agent-info">
                                     <span class="accordion-arrow">▶</span>
-                                    <div class="agent-avatar">${agent.agentId.charAt(0).toUpperCase()}</div>
-                                    <span class="agent-name">${agent.agentId}</span>
+                                    <div class="agent-avatar">${(this.agentNames[agent.agentId] || agent.agentId).charAt(0).toUpperCase()}</div>
+                                    <span class="agent-name">${this.agentNames[agent.agentId] || agent.agentId}</span>
                                 </div>
                                 <div class="agent-status ${statusClass}">
                                     <span class="dot"></span>
@@ -483,8 +484,8 @@ class NexusDashboard {
                 <div class="agent-accordion-header" onclick="this.classList.toggle('expanded'); this.nextElementSibling.classList.toggle('expanded');">
                     <div class="agent-info">
                         <span class="accordion-arrow">▶</span>
-                        <div class="agent-avatar">${agent.agentId.charAt(0).toUpperCase()}</div>
-                        <span class="agent-name">${agent.agentId}</span>
+                        <div class="agent-avatar">${(this.agentNames[agent.agentId] || agent.agentId).charAt(0).toUpperCase()}</div>
+                        <span class="agent-name">${this.agentNames[agent.agentId] || agent.agentId}</span>
                     </div>
                     <div class="agent-status">
                         <span class="dot"></span>
