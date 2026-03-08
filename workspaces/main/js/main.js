@@ -19,6 +19,18 @@ class NexusDashboard {
         this.startAutoRefresh();
         this.updateTimestamp();
         
+        // Header refresh button
+        const headerRefreshBtn = document.getElementById('header-refresh');
+        if (headerRefreshBtn) {
+            headerRefreshBtn.addEventListener('click', async () => {
+                headerRefreshBtn.style.opacity = '0.5';
+                await this.fetchAllData();
+                await this.fetchUsageData();
+                this.updateTimestamp();
+                headerRefreshBtn.style.opacity = '1';
+            });
+        }
+        
         // Initial system info
         this.fetchSystemInfo();
     }
@@ -51,11 +63,13 @@ class NexusDashboard {
             
             moduleEl.innerHTML = `
                 <div class="module-header">
-                    <div class="module-title">
-                        <span class="icon">${mod.icon}</span>
-                        <span>${mod.title}</span>
+                    <div class="module-title-area">
+                        <div class="module-title">
+                            <span class="icon">${mod.icon}</span>
+                            <span>${mod.title}</span>
+                        </div>
+                        ${refreshBtn}
                     </div>
-                    ${refreshBtn}
                     <span class="module-badge">Loading</span>
                 </div>
                 <div class="module-content">
@@ -740,6 +754,12 @@ class NexusDashboard {
         if (min === '0' && /^\*\/\d+$/.test(hour) && day === '*' && month === '*' && dow === '*') {
             const hrs = hour.slice(2);
             return `Every ${hrs} hours`;
+        }
+        
+        // Every N days at specific time: "0 10 */3 * *" → "Every 3 days"
+        if (min === '0' && /^\d+$/.test(hour) && /^\*\/\d+$/.test(day) && month === '*' && dow === '*') {
+            const days = day.slice(2);
+            return `Every ${days} days at ${hour.padStart(2, '0')}:00`;
         }
         
         // Every N minutes: "*/5 * * * *" → "Every 5 min"
