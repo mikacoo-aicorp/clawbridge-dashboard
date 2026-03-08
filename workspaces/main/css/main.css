@@ -503,10 +503,22 @@ body {
     height: 6px;
     border-radius: 50%;
     background: var(--accent-green);
+    animation: pulse-dot 1.5s infinite;
 }
 
 .agent-status.idle .dot {
     background: var(--text-muted);
+    animation: none;
+}
+
+.agent-status.active .dot {
+    background: var(--accent-green);
+    animation: pulse-dot 1.5s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent-green); }
+    50% { opacity: 0.5; box-shadow: 0 0 8px var(--accent-green); }
 }
 
 /* Sessions */

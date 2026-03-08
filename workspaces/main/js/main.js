@@ -321,6 +321,11 @@ class NexusDashboard {
                     // Agents section (from status data)
                     const agents = statusData.sessions?.byAgent || [];
                     const agentsHTML = agents.map((agent) => {
+                        // Determine if agent is active (most recent session < 60 seconds ago)
+                        const mostRecentAge = agent.recent?.[0]?.age || Infinity;
+                        const isActive = mostRecentAge < 60000;
+                        const statusClass = isActive ? 'active' : 'idle';
+                        
                         const sessionsList = (agent.recent || []).map(session => {
                             const fullKey = session.key;
                             const shortKey = this.shortenSessionKey(fullKey);
@@ -345,9 +350,9 @@ class NexusDashboard {
                                     <div class="agent-avatar">${agent.agentId.charAt(0).toUpperCase()}</div>
                                     <span class="agent-name">${agent.agentId}</span>
                                 </div>
-                                <div class="agent-status">
+                                <div class="agent-status ${statusClass}">
                                     <span class="dot"></span>
-                                    ${agent.count} session${agent.count !== 1 ? 's' : ''}
+                                    ${isActive ? 'Active' : 'Idle'}
                                 </div>
                             </div>
                             <div class="agent-accordion-content">
