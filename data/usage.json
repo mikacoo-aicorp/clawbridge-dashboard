@@ -3,12 +3,12 @@
   "lastReset": "2026-03-01",
   "models": {
     "MiniMax-M2.5": {
-      "inputTokens": 75425468,
-      "outputTokens": 246496
+      "inputTokens": 116898829,
+      "outputTokens": 396969
     },
-    "claude-sonnet-4-6": {
-      "inputTokens": 0,
-      "outputTokens": 0
+    "gpt-5.4": {
+      "inputTokens": 152261,
+      "outputTokens": 451
     },
     "gpt-5.3-codex": {
       "inputTokens": 77982,
@@ -18,15 +18,15 @@
   "sessionSnapshots": {
     "agent:main:slack:channel:d0afcg83727": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 32,
-      "outputTokens": 36,
-      "updatedAt": 1772525651621
+      "inputTokens": 264462,
+      "outputTokens": 584,
+      "updatedAt": 1773048511623
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 294,
-      "outputTokens": 129,
-      "updatedAt": 1772989394624
+      "inputTokens": 324,
+      "outputTokens": 188,
+      "updatedAt": 1773410594626
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:520ec8df-4cbf-4f91-bcf7-c57c170b1bd8": {
       "model": "MiniMax-M2.5",
@@ -35,10 +35,10 @@
       "updatedAt": 1772319794616
     },
     "agent:main:main": {
-      "model": "MiniMax-M2.5",
-      "inputTokens": 228514,
-      "outputTokens": 939,
-      "updatedAt": 1772993322107
+      "model": "gpt-5.4",
+      "inputTokens": 152261,
+      "outputTokens": 451,
+      "updatedAt": 1773421306560
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:dfbf41d3-73db-499b-bbb6-0504dd4f185f": {
       "model": "MiniMax-M2.5",
@@ -60,9 +60,9 @@
     },
     "agent:turing:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 121869,
-      "outputTokens": 616,
-      "updatedAt": 1772993202238
+      "inputTokens": 323742,
+      "outputTokens": 2192,
+      "updatedAt": 1773421338717
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:16a04755-a9e6-44a0-8a55-047e77bfea21": {
       "model": "MiniMax-M2.5",
@@ -78,9 +78,9 @@
     },
     "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 259,
-      "outputTokens": 118,
-      "updatedAt": 1772935200013
+      "inputTokens": 287,
+      "outputTokens": 126,
+      "updatedAt": 1773367200015
     },
     "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d:run:da74bb49-e90d-46aa-b747-3fa06e6d8c5a": {
       "model": "MiniMax-M2.5",
@@ -102,9 +102,9 @@
     },
     "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 924,
-      "outputTokens": 274,
-      "updatedAt": 1772956800011
+      "inputTokens": 888,
+      "outputTokens": 216,
+      "updatedAt": 1773388800016
     },
     "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:82079f6e-9210-40f2-b1a9-0b304a2c130f": {
       "model": "MiniMax-M2.5",
@@ -408,9 +408,9 @@
     },
     "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 329,
-      "outputTokens": 138,
-      "updatedAt": 1772920800013
+      "inputTokens": 321,
+      "outputTokens": 140,
+      "updatedAt": 1773352800017
     },
     "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f:run:ecb4682c-1635-41ee-adc0-e6737336fbbf": {
       "model": "MiniMax-M2.5",
@@ -642,15 +642,381 @@
     },
     "agent:scout:main": {
       "model": "MiniMax-M2.5",
-      "inputTokens": 8656,
-      "outputTokens": 407,
-      "updatedAt": 1772988820824
+      "inputTokens": 40,
+      "outputTokens": 253,
+      "updatedAt": 1773392725875
     },
     "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:bee0464e-f0aa-4958-bd1b-a96fe495bd20": {
       "model": "MiniMax-M2.5",
       "inputTokens": 294,
       "outputTokens": 129,
       "updatedAt": 1772989394624
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:431432c2-fd9a-42cd-aaca-7052c0c8b2a3": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 302,
+      "outputTokens": 160,
+      "updatedAt": 1773000194622
+    },
+    "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f:run:25e4c4cf-e339-4f28-af1c-37e9750b9bf8": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 1179,
+      "outputTokens": 485,
+      "updatedAt": 1773007200017
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:429ea1b9-37c4-472e-a08f-3cd97610673f": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 314,
+      "outputTokens": 148,
+      "updatedAt": 1773010994619
+    },
+    "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d:run:1136a387-8593-41c6-b890-53d5395672b3": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 3134,
+      "outputTokens": 712,
+      "updatedAt": 1773021600014
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:153b49b9-5858-4e85-becb-6b73edcd3c7d": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 356,
+      "outputTokens": 192,
+      "updatedAt": 1773021794623
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:f98f6667-4a84-430a-9720-ebc6cece33e3": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 300,
+      "outputTokens": 121,
+      "updatedAt": 1773032594622
+    },
+    "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:a6a01cd5-ff1f-4ab9-a7a2-22cf364bec11": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 920,
+      "outputTokens": 203,
+      "updatedAt": 1773043200015
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:71ce4cbf-cbe5-4785-ad1a-bf2ca9bdb2de": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 315,
+      "outputTokens": 147,
+      "updatedAt": 1773043394619
+    },
+    "agent:main:cron:427ece9f-8e54-4cbb-90c9-11b9caa01278": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 40876,
+      "outputTokens": 1861,
+      "updatedAt": 1773180000010
+    },
+    "agent:main:cron:427ece9f-8e54-4cbb-90c9-11b9caa01278:run:40a01d4d-dc79-4586-bddb-20de279f8b0b": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 20301,
+      "outputTokens": 1737,
+      "updatedAt": 1773048421247
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:ec5eb708-67fc-477b-8f95-c6c5a1da7f37": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 522,
+      "outputTokens": 282,
+      "updatedAt": 1773054194625
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:e0bd5a60-36e5-42e9-b50d-83e7e27f4c9f": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 335,
+      "outputTokens": 153,
+      "updatedAt": 1773064994623
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:398c9e87-3179-40d2-a5b0-f917ea0d8d29": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 302,
+      "outputTokens": 128,
+      "updatedAt": 1773075794626
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:5db97cbe-23c2-4f79-a016-b56dbc222c9e": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 354,
+      "outputTokens": 211,
+      "updatedAt": 1773086594621
+    },
+    "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f:run:f2ca2806-9e86-49dd-a89e-81d366590290": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 721,
+      "outputTokens": 156,
+      "updatedAt": 1773093600014
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:ac8a1eaf-1236-41d1-886a-630c127172d2": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 355,
+      "outputTokens": 206,
+      "updatedAt": 1773097394622
+    },
+    "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d:run:1f7460af-48a4-4013-b151-87c41d666100": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 290,
+      "outputTokens": 126,
+      "updatedAt": 1773108000013
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:aebb7c2e-7250-4512-95c3-380bb7e2c53f": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 320,
+      "outputTokens": 179,
+      "updatedAt": 1773108194622
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:6d3b709e-5710-4665-847a-1ee94067fe9b": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 299,
+      "outputTokens": 144,
+      "updatedAt": 1773118994623
+    },
+    "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:b6a8b4d7-a092-4d36-ae03-91bbdaef8cb9": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 417,
+      "outputTokens": 221,
+      "updatedAt": 1773129600014
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:fa1890c5-96df-4ab4-baf5-6ff0e1be3b1f": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 297,
+      "outputTokens": 140,
+      "updatedAt": 1773129794621
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:d44e65e9-072e-478d-b579-680583e9c396": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 299,
+      "outputTokens": 115,
+      "updatedAt": 1773140594624
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:8fc28e8f-4259-4cfb-b38b-73ad177b94d8": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 340,
+      "outputTokens": 184,
+      "updatedAt": 1773151394627
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:9bafa0e5-7f90-45a0-b879-1953a575d77e": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 339,
+      "outputTokens": 182,
+      "updatedAt": 1773162194623
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:0fbf274b-3cb0-4380-b3bb-4eaa1fa2ba69": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 336,
+      "outputTokens": 182,
+      "updatedAt": 1773172994618
+    },
+    "agent:main:cron:427ece9f-8e54-4cbb-90c9-11b9caa01278:run:ceca41b3-499c-4577-a0b3-51543faa834e": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 40876,
+      "outputTokens": 1861,
+      "updatedAt": 1773180000010
+    },
+    "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f:run:87109f9f-a7e0-45fd-95e9-34d40a2fbbb5": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 347,
+      "outputTokens": 127,
+      "updatedAt": 1773180124377
+    },
+    "agent:main:cron:94e90eec-ca48-437a-8735-b57f03655d76": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 859,
+      "outputTokens": 248,
+      "updatedAt": 1773180142686
+    },
+    "agent:main:cron:94e90eec-ca48-437a-8735-b57f03655d76:run:a8692556-4837-4d10-80dc-68c4d15fab60": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 859,
+      "outputTokens": 248,
+      "updatedAt": 1773180142686
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:9a45a627-1a7b-4a45-8c10-044a92bc07a3": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 340,
+      "outputTokens": 206,
+      "updatedAt": 1773183794616
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:f7f56588-fbf7-4a2c-9bd0-0d921ab28aec": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 335,
+      "outputTokens": 191,
+      "updatedAt": 1773194594620
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:c091fb34-863a-4847-973e-19b14375df77": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 310,
+      "outputTokens": 147,
+      "updatedAt": 1773205394619
+    },
+    "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:c9240ccc-7171-4886-bd29-d2d72abe0939": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 381,
+      "outputTokens": 191,
+      "updatedAt": 1773216000013
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:9f59f7bf-d2be-46ee-b847-27651ed98e99": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 258,
+      "outputTokens": 173,
+      "updatedAt": 1773216194619
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:14499437-7aba-464c-8cd6-c2d418ccc87e": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 258,
+      "outputTokens": 168,
+      "updatedAt": 1773226994618
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:5817b7aa-fe6f-4328-95af-a85ca65336fb": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 337,
+      "outputTokens": 168,
+      "updatedAt": 1773237794622
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:fb054682-307b-4291-bad0-fd908a6d3e40": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 307,
+      "outputTokens": 133,
+      "updatedAt": 1773248594621
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:b5d709d3-01ee-4b62-98eb-c4c069909ca9": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 311,
+      "outputTokens": 137,
+      "updatedAt": 1773259394621
+    },
+    "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f:run:ed13811b-1303-4c33-9b87-ef56336e8fee": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 18418,
+      "outputTokens": 142,
+      "updatedAt": 1773266400014
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:beb9ee70-7467-48cd-83d2-32f9b209d1e1": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 362,
+      "outputTokens": 219,
+      "updatedAt": 1773270194620
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:e583af1d-5931-43db-80dd-6036cd08eb36": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 344,
+      "outputTokens": 183,
+      "updatedAt": 1773280994621
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:998b7451-4c5e-4a0e-9177-a1e8aa769c89": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 313,
+      "outputTokens": 164,
+      "updatedAt": 1773291794620
+    },
+    "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:9a259fef-3bf1-4c3e-b6cf-98f15a36b1c0": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 931,
+      "outputTokens": 261,
+      "updatedAt": 1773302400012
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:4af04139-d3f2-4672-abdf-8109b666cdc4": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 340,
+      "outputTokens": 199,
+      "updatedAt": 1773302594620
+    },
+    "agent:main:slack:channel:u0aff4pu5eh": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "updatedAt": 1773308074230
+    },
+    "agent:main:slack:channel:g0afcg83727": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "updatedAt": 1773308230079
+    },
+    "agent:main:slack:channel:g0aff4pu5eh": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "updatedAt": 1773308471028
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:0987f753-264e-4ade-bb7b-87c7c25d2237": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 305,
+      "outputTokens": 132,
+      "updatedAt": 1773313394622
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:6ad6387e-7edb-4b37-861c-e77537a9087d": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 336,
+      "outputTokens": 198,
+      "updatedAt": 1773324194623
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:ff2ae1f7-e5df-4958-90a4-c7701715c839": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 304,
+      "outputTokens": 158,
+      "updatedAt": 1773335420266
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:eda5dcf3-f827-491e-a885-02285e04c05b": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 339,
+      "outputTokens": 180,
+      "updatedAt": 1773345794622
+    },
+    "agent:main:cron:b57321dd-1d74-4f07-8ada-d02ba301855f:run:0684af7a-7ece-4541-bae5-f131ff44417b": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 321,
+      "outputTokens": 140,
+      "updatedAt": 1773352800017
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:ddeba519-8ece-4d36-a6f9-f381a52b2f78": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 349,
+      "outputTokens": 209,
+      "updatedAt": 1773356594617
+    },
+    "agent:main:cron:f86c9608-5436-46f5-b6f9-3798cf184c0d:run:3efece07-63f1-4c6c-8410-f9627b441ee7": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 287,
+      "outputTokens": 126,
+      "updatedAt": 1773367200015
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:33e4e747-d630-4213-8b3c-b3a66016034b": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 315,
+      "outputTokens": 157,
+      "updatedAt": 1773367394621
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:e7382694-e443-445d-b759-acfa59c88f1f": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 311,
+      "outputTokens": 153,
+      "updatedAt": 1773378194623
+    },
+    "agent:main:cron:a984efea-46d8-4ebe-9169-4ecad05d8443:run:0c2bf6a6-2784-4a3a-8894-0e50e36a5204": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 888,
+      "outputTokens": 216,
+      "updatedAt": 1773388800016
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:cd0df2f8-cfdb-4aec-9ecc-674d280f8335": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 39765,
+      "outputTokens": 152,
+      "updatedAt": 1773388994620
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:2cca5771-636c-4241-8745-e369b3f64e81": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 344,
+      "outputTokens": 221,
+      "updatedAt": 1773399794625
+    },
+    "agent:main:cron:bcfb4430-5b59-41a0-8f87-c2e7bb9c2cf4:run:aeaf5262-e171-44d0-a95c-ed766ca385b9": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 324,
+      "outputTokens": 188,
+      "updatedAt": 1773410594626
+    },
+    "agent:main:slack:slash:u0aff4pu5eh": {
+      "model": "MiniMax-M2.5",
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "updatedAt": 1773416747037
     }
   },
   "days": {
@@ -818,8 +1184,8 @@
     "2026-03-08": {
       "models": {
         "MiniMax-M2.5": {
-          "inputTokens": 75425468,
-          "outputTokens": 246496,
+          "inputTokens": 78379323,
+          "outputTokens": 256367,
           "cost": null
         },
         "gpt-5.3-codex": {
@@ -834,9 +1200,124 @@
         }
       },
       "totalCost": 0.27,
-      "totalTokens": 75759477,
+      "totalTokens": 78723203,
       "sessionCount": 21,
-      "timestamp": "2026-03-08T18:10:01.956Z"
+      "timestamp": "2026-03-08T23:59:38.174Z"
+    },
+    "2026-03-09": {
+      "models": {
+        "MiniMax-M2.5": {
+          "inputTokens": 90146552,
+          "outputTokens": 294355,
+          "cost": null
+        },
+        "gpt-5.3-codex": {
+          "inputTokens": 77982,
+          "outputTokens": 9531,
+          "cost": 0.27
+        },
+        "claude-sonnet-4-6": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "cost": 0
+        }
+      },
+      "totalCost": 0.27,
+      "totalTokens": 90528420,
+      "sessionCount": 22,
+      "timestamp": "2026-03-09T23:59:38.730Z"
+    },
+    "2026-03-10": {
+      "models": {
+        "MiniMax-M2.5": {
+          "inputTokens": 92654103,
+          "outputTokens": 314796,
+          "cost": null
+        },
+        "gpt-5.3-codex": {
+          "inputTokens": 77982,
+          "outputTokens": 9531,
+          "cost": 0.27
+        },
+        "claude-sonnet-4-6": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "cost": 0
+        }
+      },
+      "totalCost": 0.27,
+      "totalTokens": 93056412,
+      "sessionCount": 24,
+      "timestamp": "2026-03-10T23:59:38.361Z"
+    },
+    "2026-03-11": {
+      "models": {
+        "MiniMax-M2.5": {
+          "inputTokens": 104346263,
+          "outputTokens": 350778,
+          "cost": null
+        },
+        "gpt-5.3-codex": {
+          "inputTokens": 77982,
+          "outputTokens": 9531,
+          "cost": 0.27
+        },
+        "claude-sonnet-4-6": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "cost": 0
+        }
+      },
+      "totalCost": 0.27,
+      "totalTokens": 104784554,
+      "sessionCount": 21,
+      "timestamp": "2026-03-11T23:59:59.018Z"
+    },
+    "2026-03-12": {
+      "models": {
+        "MiniMax-M2.5": {
+          "inputTokens": 110599471,
+          "outputTokens": 374287,
+          "cost": null
+        },
+        "gpt-5.3-codex": {
+          "inputTokens": 77982,
+          "outputTokens": 9531,
+          "cost": 0.27
+        },
+        "claude-sonnet-4-6": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "cost": 0
+        }
+      },
+      "totalCost": 0.27,
+      "totalTokens": 111061271,
+      "sessionCount": 24,
+      "timestamp": "2026-03-12T23:59:39.363Z"
+    },
+    "2026-03-13": {
+      "models": {
+        "MiniMax-M2.5": {
+          "inputTokens": 116898829,
+          "outputTokens": 396969,
+          "cost": null
+        },
+        "gpt-5.4": {
+          "inputTokens": 152261,
+          "outputTokens": 451,
+          "cost": null
+        },
+        "gpt-5.3-codex": {
+          "inputTokens": 77982,
+          "outputTokens": 9531,
+          "cost": 0.27
+        }
+      },
+      "totalCost": 0.27,
+      "totalTokens": 117536023,
+      "sessionCount": 26,
+      "timestamp": "2026-03-13T17:02:23.566Z"
     }
   }
 }

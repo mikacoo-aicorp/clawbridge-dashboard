@@ -33,7 +33,7 @@ setInterval(pollCpu, 5000);
 
 const DATA_DIR = path.join(__dirname, 'data');
 const USAGE_FILE = path.join(DATA_DIR, 'usage.json');
-const ALL_MODELS = ['MiniMax-M2.5', 'gpt-5.3-codex', 'claude-sonnet-4-6'];
+const ALL_MODELS = ['MiniMax-M2.5', 'gpt-5.4', 'gpt-5.3-codex'];
 
 if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -42,7 +42,7 @@ if (!fs.existsSync(DATA_DIR)) {
 function emptyModelTotals() {
     return {
         'MiniMax-M2.5': { inputTokens: 0, outputTokens: 0 },
-        'claude-sonnet-4-6': { inputTokens: 0, outputTokens: 0 },
+        'gpt-5.4': { inputTokens: 0, outputTokens: 0 },
         'gpt-5.3-codex': { inputTokens: 0, outputTokens: 0 }
     };
 }
@@ -299,8 +299,8 @@ app.get('/api/dashboard-version', async (req, res) => {
 
 const PRICING = {
     'MiniMax-M2.5': { input: 0.10, output: 0.30 },
-    'claude-sonnet-4-6': { input: 3.00, output: 15.00 },
-    'gpt-5.3-codex': { input: 1.75, output: 14.00 }
+    'gpt-5.3-codex': { input: 1.75, output: 14.00 },
+    'openai-codex/gpt-5.4': { input: 2.00, output: 16.00 }
 };
 
 app.get('/api/usage', async (req, res) => {
@@ -372,8 +372,8 @@ app.get('/api/usage', async (req, res) => {
             const stats = usageData.models[model] || { inputTokens: 0, outputTokens: 0 };
             let cost = null;
 
-            // MiniMax: fixed $20 plan => cost shown as N/A (null)
-            if (model !== 'MiniMax-M2.5') {
+            // MiniMax & GPT Plus 5.4: fixed plan => cost shown as N/A (null)
+            if (model !== 'MiniMax-M2.5' && model !== 'gpt-5.4') {
                 cost = Math.round(((stats.inputTokens / 1000000) * PRICING[model].input + (stats.outputTokens / 1000000) * PRICING[model].output) * 1000) / 1000;
                 totalCost += cost;
             }

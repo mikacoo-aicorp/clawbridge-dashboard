@@ -291,13 +291,13 @@ class NexusDashboard {
 
         const modelNames = {
             'MiniMax-M2.5': 'MiniMax M2.5',
-            'claude-sonnet-4-6': 'Claude Sonnet 4.6',
+            'gpt-5.4': 'GPT Plus 5.4',
             'gpt-5.3-codex': 'GPT Codex 5.3'
         };
 
         const modelIcons = {
             'MiniMax-M2.5': '🔵',
-            'claude-sonnet-4-6': '🟣',
+            'gpt-5.4': '🟡',
             'gpt-5.3-codex': '🟢'
         };
 
@@ -773,14 +773,14 @@ class NexusDashboard {
         // Model display names
         const modelNames = {
             'MiniMax-M2.5': 'MiniMax M2.5',
-            'claude-sonnet-4-6': 'Claude Sonnet 4.6',
+            'gpt-5.4': 'GPT Plus 5.4',
             'gpt-5.3-codex': 'GPT Codex 5.3'
         };
 
         // Model icons
         const modelIcons = {
             'MiniMax-M2.5': '🔵',
-            'claude-sonnet-4-6': '🟣',
+            'gpt-5.4': '🟡',
             'gpt-5.3-codex': '🟢'
         };
 
