@@ -326,6 +326,15 @@ class NexusDashboard {
                 if (hours > 0) return `${hours}h ${mins}m`;
                 return `${mins}m`;
             };
+            const formatResetDate = (ts) => {
+                if (!ts) return 'N/A';
+                return new Date(ts).toLocaleString([], {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            };
             
             const gpt54Stats = models['gpt-5.4'] || { inputTokens: 0, outputTokens: 0 };
             const gpt54Session = this.data.status?.sessions?.recent?.find(s => s.model === 'gpt-5.4');
@@ -345,7 +354,7 @@ class NexusDashboard {
                             <div class="quota-summary-item"><span class="quota-label-inline">5h:</span> <span class="quota-value-inline ${fiveHWarn}">${100 - fiveH.usedPercent}%</span></div>
                             <div class="quota-summary-item"><span class="quota-label-inline">5h reset:</span> <span class="quota-value-inline">${formatReset(fiveH.resetAt)}</span></div>
                             <div class="quota-summary-item"><span class="quota-label-inline">week:</span> <span class="quota-value-inline ${weekWarn}">${100 - week.usedPercent}%</span></div>
-                            <div class="quota-summary-item"><span class="quota-label-inline">week reset:</span> <span class="quota-value-inline">${formatReset(week.resetAt)}</span></div>
+                            <div class="quota-summary-item"><span class="quota-label-inline">week reset:</span> <span class="quota-value-inline">${formatResetDate(week.resetAt)}</span></div>
                         </div>
                         <div class="usage-cost">${gpt54Stats.costLabel}</div>
                     </div>
@@ -369,7 +378,7 @@ class NexusDashboard {
                     </div>
                     <div class="quota-row">
                         <div class="quota-label">Week Reset</div>
-                        <div class="quota-value">${formatReset(week.resetAt)}</div>
+                        <div class="quota-value">${formatResetDate(week.resetAt)}</div>
                     </div>
                     ${gpt54Stats ? `
                     <div class="quota-row">
@@ -916,6 +925,15 @@ class NexusDashboard {
                 if (hours > 0) return `${hours}h ${mins}m`;
                 return `${mins}m`;
             };
+            const formatResetDate = (ts) => {
+                if (!ts) return 'N/A';
+                return new Date(ts).toLocaleString([], {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            };
             
             const gpt54Stats = models['gpt-5.4'] || { inputTokens: 0, outputTokens: 0 };
             const gpt54Session = this.data.status?.sessions?.recent?.find(s => s.model === 'gpt-5.4');
@@ -935,7 +953,7 @@ class NexusDashboard {
                             <div class="quota-summary-item"><span class="quota-label-inline">5h:</span> <span class="quota-value-inline ${fiveHWarn}">${100 - fiveH.usedPercent}%</span></div>
                             <div class="quota-summary-item"><span class="quota-label-inline">5h reset:</span> <span class="quota-value-inline">${formatReset(fiveH.resetAt)}</span></div>
                             <div class="quota-summary-item"><span class="quota-label-inline">week:</span> <span class="quota-value-inline ${weekWarn}">${100 - week.usedPercent}%</span></div>
-                            <div class="quota-summary-item"><span class="quota-label-inline">week reset:</span> <span class="quota-value-inline">${formatReset(week.resetAt)}</span></div>
+                            <div class="quota-summary-item"><span class="quota-label-inline">week reset:</span> <span class="quota-value-inline">${formatResetDate(week.resetAt)}</span></div>
                         </div>
                         <div class="usage-cost">${gpt54Stats.costLabel}</div>
                     </div>
@@ -959,7 +977,7 @@ class NexusDashboard {
                     </div>
                     <div class="quota-row">
                         <div class="quota-label">Week Reset</div>
-                        <div class="quota-value">${formatReset(week.resetAt)}</div>
+                        <div class="quota-value">${formatResetDate(week.resetAt)}</div>
                     </div>
                     ${gpt54Stats ? `
                     <div class="quota-row">
