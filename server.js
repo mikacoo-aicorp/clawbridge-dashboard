@@ -33,7 +33,7 @@ setInterval(pollCpu, 5000);
 
 const DATA_DIR = path.join(__dirname, 'data');
 const USAGE_FILE = path.join(DATA_DIR, 'usage.json');
-const ALL_MODELS = ['MiniMax-M2.5', 'gpt-5.4', 'gpt-5.3-codex'];
+const ALL_MODELS = ['MiniMax-M2.5', 'gpt-5.4'];
 
 if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -42,8 +42,7 @@ if (!fs.existsSync(DATA_DIR)) {
 function emptyModelTotals() {
     return {
         'MiniMax-M2.5': { inputTokens: 0, outputTokens: 0 },
-        'gpt-5.4': { inputTokens: 0, outputTokens: 0 },
-        'gpt-5.3-codex': { inputTokens: 0, outputTokens: 0 }
+        'gpt-5.4': { inputTokens: 0, outputTokens: 0 }
     };
 }
 
@@ -57,6 +56,16 @@ function normalizeUsageData(raw) {
             models[model].inputTokens = Number(usage.models[model]?.inputTokens || 0);
             models[model].outputTokens = Number(usage.models[model]?.outputTokens || 0);
         });
+        
+        // Backward compatibility: preserve gpt-5.3-codex tokens if they exist in old usage.json
+        // These are NOT added to totalCost (no longer tracked) but preserve token totals
+        if (usage.models['gpt-5.3-codex']) {
+            // Store legacy codex tokens in a separate field for reference
+            models['gpt-5.3-codex'] = {
+                inputTokens: Number(usage.models['gpt-5.3-codex']?.inputTokens || 0),
+                outputTokens: Number(usage.models['gpt-5.3-codex']?.outputTokens || 0)
+            };
+        }
     }
 
     // Backward compatibility from old maxTokens format
@@ -299,9 +308,52 @@ app.get('/api/dashboard-version', async (req, res) => {
 
 const PRICING = {
     'MiniMax-M2.5': { input: 0.10, output: 0.30 },
-    'gpt-5.3-codex': { input: 1.75, output: 14.00 },
     'openai-codex/gpt-5.4': { input: 2.00, output: 16.00 }
 };
+
+// Codex OAuth quota tracking
+app.get('/api/codex-quota', async (req, res) => {
+    try {
+        const result = await new Promise((resolve, reject) => {
+            exec('openclaw status --usage --json', { timeout: 15000 }, (error, stdout) => {
+                if (error) { reject(error); return; }
+                try { resolve(JSON.parse(stdout)); } catch (e) { reject(e); }
+            });
+        });
+
+        const usage = result.usage || {};
+        const providers = usage.providers || [];
+
+        // Find Codex provider
+        const codex = providers.find(p => p.provider === 'openai-codex');
+
+        if (!codex) {
+            return res.json({ error: 'Codex not configured' });
+        }
+
+        // Extract windows
+        const windows = {};
+        if (codex.windows) {
+            codex.windows.forEach(w => {
+                windows[w.label.toLowerCase()] = {
+                    usedPercent: w.usedPercent,
+                    resetAt: w.resetAt
+                };
+            });
+        }
+
+        res.json({
+            provider: 'openai-codex',
+            displayName: codex.displayName || 'Codex',
+            plan: codex.plan || null,
+            authType: 'oauth',
+            windows,
+            updatedAt: usage.updatedAt
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 app.get('/api/usage', async (req, res) => {
     try {
@@ -371,9 +423,20 @@ app.get('/api/usage', async (req, res) => {
         ALL_MODELS.forEach(model => {
             const stats = usageData.models[model] || { inputTokens: 0, outputTokens: 0 };
             let cost = null;
+            let costLabel = null;
 
-            // MiniMax & GPT Plus 5.4: fixed plan => cost shown as N/A (null)
-            if (model !== 'MiniMax-M2.5' && model !== 'gpt-5.4') {
+            // MiniMax-M2.5: fixed $10/mo plan
+            if (model === 'MiniMax-M2.5') {
+                cost = 10;
+                costLabel = '$10/mo';
+                totalCost += cost;
+            // GPT Plus 5.4 (GPT Pro OAuth): fixed $200/mo plan
+            } else if (model === 'gpt-5.4') {
+                cost = 200;
+                costLabel = '$200/mo';
+                totalCost += cost;
+            } else {
+                // Other models with pricing
                 cost = Math.round(((stats.inputTokens / 1000000) * PRICING[model].input + (stats.outputTokens / 1000000) * PRICING[model].output) * 1000) / 1000;
                 totalCost += cost;
             }
@@ -381,11 +444,18 @@ app.get('/api/usage', async (req, res) => {
             models[model] = {
                 inputTokens: stats.inputTokens,
                 outputTokens: stats.outputTokens,
-                cost
+                cost,
+                costLabel
             };
 
             totalTokens += stats.inputTokens + stats.outputTokens;
         });
+        
+        // Backward compatibility: include legacy gpt-5.3-codex tokens in total (but not in cost)
+        if (usageData.models['gpt-5.3-codex']) {
+            const legacyStats = usageData.models['gpt-5.3-codex'];
+            totalTokens += legacyStats.inputTokens + legacyStats.outputTokens;
+        }
 
         usageData.days[today] = {
             models: JSON.parse(JSON.stringify(models)),

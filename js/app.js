@@ -244,7 +244,7 @@ class NexusDashboard {
                     <div class="health-status ${isHealthy ? 'healthy' : 'error'}">
                         ${isHealthy ? 'Healthy' : 'Error'}
                     </div>
-                    <div class="version-info">OpenClaw ${version}</div>
+                    <div class="version-info">${version}</div>
                 </div>
                 <div class="channel-subheading">Channels</div>
                 <div class="stats-grid">
@@ -291,21 +291,127 @@ class NexusDashboard {
 
         const modelNames = {
             'MiniMax-M2.5': 'MiniMax M2.5',
-            'gpt-5.4': 'GPT Plus 5.4',
-            'gpt-5.3-codex': 'GPT Codex 5.3'
+            'gpt-5.4': 'GPT Pro OAuth'
         };
 
         const modelIcons = {
             'MiniMax-M2.5': '🔵',
-            'gpt-5.4': '🟡',
-            'gpt-5.3-codex': '🟢'
+            'gpt-5.4': '🟡'
         };
 
-        const modelRows = Object.entries(models).map(([model, stats]) => {
+        // Get Codex OAuth quota data
+        const codexQuota = this.data.codexQuota || {};
+        const codexWindows = codexQuota.windows || {};
+        
+        // Render GPT Pro OAuth quota row (collapsible)
+        const renderCodexQuota = () => {
+            if (!codexQuota.provider || !codexWindows['5h']) return '';
+            
+            const fiveH = codexWindows['5h'];
+            const week = codexWindows['week'];
+            
+            // Calculate warning states
+            const fiveHWarn = fiveH.usedPercent >= 85 ? 'danger' : (fiveH.usedPercent >= 70 ? 'warning' : '');
+            const weekWarn = week.usedPercent >= 85 ? 'warning' : '';
+            
+            // Format reset times
+            const formatReset = (ts) => {
+                if (!ts) return 'N/A';
+                const date = new Date(ts);
+                const now = new Date();
+                const diff = date - now;
+                const hours = Math.floor(diff / 3600000);
+                const mins = Math.floor((diff % 3600000) / 60000);
+                if (hours > 24) return date.toLocaleDateString();
+                if (hours > 0) return `${hours}h ${mins}m`;
+                return `${mins}m`;
+            };
+            
+            const gpt54Stats = models['gpt-5.4'] || { inputTokens: 0, outputTokens: 0 };
+            const gpt54Session = this.data.status?.sessions?.recent?.find(s => s.model === 'gpt-5.4');
+            
+            return `
+                <div class="usage-model-row codex-oauth-row collapsed" onclick="this.classList.toggle('collapsed'); document.getElementById('codex-details-api').classList.toggle('hidden'); this.querySelector('.toggle-icon').textContent = this.classList.contains('collapsed') ? '▶' : '▼';">
+                    <div class="usage-model-info">
+                        <span class="toggle-icon">▶</span>
+                        <span class="usage-icon">🟡</span>
+                        <div class="usage-model-name-block">
+                            <span class="usage-model-name">GPT Pro OAuth</span>
+                            <span class="oauth-badge">OAuth</span>
+                        </div>
+                    </div>
+                    <div class="usage-model-stats">
+                        <div class="quota-summary-collapsed">
+                            <div class="quota-summary-item"><span class="quota-label-inline">5h:</span> <span class="quota-value-inline ${fiveHWarn}">${100 - fiveH.usedPercent}%</span></div>
+                            <div class="quota-summary-item"><span class="quota-label-inline">5h reset:</span> <span class="quota-value-inline">${formatReset(fiveH.resetAt)}</span></div>
+                            <div class="quota-summary-item"><span class="quota-label-inline">week:</span> <span class="quota-value-inline ${weekWarn}">${100 - week.usedPercent}%</span></div>
+                            <div class="quota-summary-item"><span class="quota-label-inline">week reset:</span> <span class="quota-value-inline">${formatReset(week.resetAt)}</span></div>
+                        </div>
+                        <div class="usage-cost">${gpt54Stats.costLabel}</div>
+                    </div>
+                </div>
+                <div class="codex-quota-details hidden" id="codex-details-api">
+                    <div class="quota-row">
+                        <div class="quota-label">Auth Type</div>
+                        <div class="quota-value">${codexQuota.authType || 'oauth'}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">5h Remaining</div>
+                        <div class="quota-value ${fiveHWarn}">${100 - fiveH.usedPercent}%</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">5h Reset</div>
+                        <div class="quota-value">${formatReset(fiveH.resetAt)}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Week Remaining</div>
+                        <div class="quota-value ${weekWarn}">${100 - week.usedPercent}%</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Week Reset</div>
+                        <div class="quota-value">${formatReset(week.resetAt)}</div>
+                    </div>
+                    ${gpt54Stats ? `
+                    <div class="quota-row">
+                        <div class="quota-label">Total In</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Stats.inputTokens)}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Total Out</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Stats.outputTokens)}</div>
+                    </div>
+                    ${gpt54Session ? `
+                    <div class="quota-row">
+                        <div class="quota-label">Session In</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Session.inputTokens)}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Session Out</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Session.outputTokens)}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Cache Hit</div>
+                        <div class="quota-value">${gpt54Session.cacheRead > 0 ? Math.round((gpt54Session.cacheRead / (gpt54Session.cacheRead + gpt54Session.inputTokens)) * 100) : 0}%</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Context</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Session.totalTokens)} / ${this.formatTokens(gpt54Session.contextTokens)}</div>
+                    </div>
+                    ` : ''}
+                    ` : ''}
+                    <div class="quota-note"><em>Note: Plus quota is separate from API token tracking</em></div>
+                </div>
+            `;
+        };
+        
+        // Separate GPT Pro OAuth () from other models
+        const gpt54Row = models['gpt-5.4'] ? renderCodexQuota() : '';
+        const otherModels = Object.entries(models)
+            .filter(([model]) => model !== 'gpt-5.4')
+            .map(([model, stats]) => {
             const name = modelNames[model] || model;
             const icon = modelIcons[model] || '⚪';
-            const totalModelTokens = stats.inputTokens + stats.outputTokens;
-            const costDisplay = stats.cost === null ? 'N/A' : `$${stats.cost.toFixed(3)}`;
+            const costDisplay = stats.costLabel || (stats.cost === null ? 'N/A' : `$${stats.cost.toFixed(3)}`);
             return `
                 <div class="usage-model-row">
                     <div class="usage-model-info">
@@ -336,7 +442,8 @@ class NexusDashboard {
                 </div>
             </div>
             <div class="usage-models">
-                ${modelRows || '<div class="usage-empty">No usage data</div>'}
+                ${gpt54Row}
+                ${otherModels || '<div class="usage-empty">No usage data</div>'}
             </div>
         `;
 
@@ -423,7 +530,7 @@ class NexusDashboard {
                 <div class="health-status ${isHealthy ? 'healthy' : 'error'}">
                     ${isHealthy ? 'Healthy' : 'Error'}
                 </div>
-                <div class="version-info">OpenClaw ${version}</div>
+                <div class="version-info">${version}</div>
             </div>
             <div class="channel-subheading">Channels</div>
             <div class="stats-grid">
@@ -773,21 +880,127 @@ class NexusDashboard {
         // Model display names
         const modelNames = {
             'MiniMax-M2.5': 'MiniMax M2.5',
-            'gpt-5.4': 'GPT Plus 5.4',
-            'gpt-5.3-codex': 'GPT Codex 5.3'
+            'gpt-5.4': 'GPT Pro OAuth'
         };
 
         // Model icons
         const modelIcons = {
             'MiniMax-M2.5': '🔵',
-            'gpt-5.4': '🟡',
-            'gpt-5.3-codex': '🟢'
+            'gpt-5.4': '🟡'
         };
 
-        const modelRows = Object.entries(models).map(([model, stats]) => {
+        // Get Codex OAuth quota data
+        const codexQuota = this.data.codexQuota || {};
+        const codexWindows = codexQuota.windows || {};
+        
+        // Render Codex OAuth quota row for GPT Pro OAuth (collapsible)
+        const renderCodexQuota = () => {
+            if (!codexQuota.provider || !codexWindows['5h']) return '';
+            
+            const fiveH = codexWindows['5h'];
+            const week = codexWindows['week'];
+            
+            // Calculate warning states
+            const fiveHWarn = fiveH.usedPercent >= 85 ? 'danger' : (fiveH.usedPercent >= 70 ? 'warning' : '');
+            const weekWarn = week.usedPercent >= 85 ? 'warning' : '';
+            
+            // Format reset times
+            const formatReset = (ts) => {
+                if (!ts) return 'N/A';
+                const date = new Date(ts);
+                const now = new Date();
+                const diff = date - now;
+                const hours = Math.floor(diff / 3600000);
+                const mins = Math.floor((diff % 3600000) / 60000);
+                if (hours > 24) return date.toLocaleDateString();
+                if (hours > 0) return `${hours}h ${mins}m`;
+                return `${mins}m`;
+            };
+            
+            const gpt54Stats = models['gpt-5.4'] || { inputTokens: 0, outputTokens: 0 };
+            const gpt54Session = this.data.status?.sessions?.recent?.find(s => s.model === 'gpt-5.4');
+            
+            return `
+                <div class="usage-model-row codex-oauth-row collapsed" onclick="this.classList.toggle('collapsed'); document.getElementById('codex-details-usage').classList.toggle('hidden'); this.querySelector('.toggle-icon').textContent = this.classList.contains('collapsed') ? '▶' : '▼';">
+                    <div class="usage-model-info">
+                        <span class="toggle-icon">▶</span>
+                        <span class="usage-icon">🟡</span>
+                        <div class="usage-model-name-block">
+                            <span class="usage-model-name">GPT Pro OAuth</span>
+                            <span class="oauth-badge">OAuth</span>
+                        </div>
+                    </div>
+                    <div class="usage-model-stats">
+                        <div class="quota-summary-collapsed">
+                            <div class="quota-summary-item"><span class="quota-label-inline">5h:</span> <span class="quota-value-inline ${fiveHWarn}">${100 - fiveH.usedPercent}%</span></div>
+                            <div class="quota-summary-item"><span class="quota-label-inline">5h reset:</span> <span class="quota-value-inline">${formatReset(fiveH.resetAt)}</span></div>
+                            <div class="quota-summary-item"><span class="quota-label-inline">week:</span> <span class="quota-value-inline ${weekWarn}">${100 - week.usedPercent}%</span></div>
+                            <div class="quota-summary-item"><span class="quota-label-inline">week reset:</span> <span class="quota-value-inline">${formatReset(week.resetAt)}</span></div>
+                        </div>
+                        <div class="usage-cost">${gpt54Stats.costLabel}</div>
+                    </div>
+                </div>
+                <div class="codex-quota-details hidden" id="codex-details-usage">
+                    <div class="quota-row">
+                        <div class="quota-label">Auth Type</div>
+                        <div class="quota-value">${codexQuota.authType || 'oauth'}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">5h Remaining</div>
+                        <div class="quota-value ${fiveHWarn}">${100 - fiveH.usedPercent}%</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">5h Reset</div>
+                        <div class="quota-value">${formatReset(fiveH.resetAt)}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Week Remaining</div>
+                        <div class="quota-value ${weekWarn}">${100 - week.usedPercent}%</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Week Reset</div>
+                        <div class="quota-value">${formatReset(week.resetAt)}</div>
+                    </div>
+                    ${gpt54Stats ? `
+                    <div class="quota-row">
+                        <div class="quota-label">Total In</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Stats.inputTokens)}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Total Out</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Stats.outputTokens)}</div>
+                    </div>
+                    ${gpt54Session ? `
+                    <div class="quota-row">
+                        <div class="quota-label">Session In</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Session.inputTokens)}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Session Out</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Session.outputTokens)}</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Cache Hit</div>
+                        <div class="quota-value">${gpt54Session.cacheRead > 0 ? Math.round((gpt54Session.cacheRead / (gpt54Session.cacheRead + gpt54Session.inputTokens)) * 100) : 0}%</div>
+                    </div>
+                    <div class="quota-row">
+                        <div class="quota-label">Context</div>
+                        <div class="quota-value">${this.formatTokens(gpt54Session.totalTokens)} / ${this.formatTokens(gpt54Session.contextTokens)}</div>
+                    </div>
+                    ` : ''}
+                    ` : ''}
+                    <div class="quota-note"><em>Note: Plus quota is separate from API token tracking</em></div>
+                </div>
+            `;
+        };
+        
+        // Separate GPT Pro OAuth () from other models
+        const gpt54Row = models['gpt-5.4'] ? renderCodexQuota() : '';
+        const otherModels = Object.entries(models)
+            .filter(([model]) => model !== 'gpt-5.4')
+            .map(([model, stats]) => {
             const name = modelNames[model] || model;
             const icon = modelIcons[model] || '⚪';
-            const totalModelTokens = stats.inputTokens + stats.outputTokens;
             const costDisplay = stats.cost === null ? 'N/A' : `$${stats.cost.toFixed(3)}`;
             return `
                 <div class="usage-model-row">
@@ -819,7 +1032,8 @@ class NexusDashboard {
                 </div>
             </div>
             <div class="usage-models">
-                ${modelRows || '<div class="usage-empty">No usage data</div>'}
+                ${gpt54Row}
+                ${otherModels || '<div class="usage-empty">No usage data</div>'}
             </div>
         `;
     }
