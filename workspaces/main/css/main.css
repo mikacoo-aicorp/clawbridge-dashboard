@@ -986,24 +986,29 @@ body {
 .quota-summary-collapsed {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    text-align: right;
+    gap: 3px;
+    min-width: 160px;
 }
 
 .quota-summary-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 8px;
     font-size: 11px;
 }
 
 .quota-label-inline {
     color: var(--text-muted, #9ca3af);
+    text-align: left;
+    white-space: nowrap;
 }
 
 .quota-value-inline {
     font-weight: 700;
     color: var(--text-primary, #e5e7eb);
+    text-align: right;
+    white-space: nowrap;
 }
 
 .quota-value-inline.warning {

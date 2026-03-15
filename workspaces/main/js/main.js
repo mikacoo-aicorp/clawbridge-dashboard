@@ -310,11 +310,12 @@ class NexusDashboard {
                         };
                         const formatResetDate = (ts) => {
                             if (!ts) return 'N/A';
-                            return new Date(ts).toLocaleString([], {
+                            return new Date(ts).toLocaleString('en-GB', {
+                                day: '2-digit',
                                 month: 'short',
-                                day: 'numeric',
                                 hour: '2-digit',
-                                minute: '2-digit'
+                                minute: '2-digit',
+                                hour12: false
                             });
                         };
                         
