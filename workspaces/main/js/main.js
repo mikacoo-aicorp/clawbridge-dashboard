@@ -17,6 +17,9 @@ class NexusDashboard {
         this.renderModules();
         await this.fetchAllData();
         await this.fetchUsageData();
+        // Render apiAgents only after both status (from fetchAllData) AND usage (from fetchUsageData) are available
+        // Pass the usage data directly to ensure it's available during render
+        this.renderModule('apiAgents', this.data.usage || {});
         this.startAutoRefresh();
         this.updateTimestamp();
         
@@ -27,6 +30,8 @@ class NexusDashboard {
                 headerRefreshBtn.style.opacity = '0.5';
                 await this.fetchAllData();
                 await this.fetchUsageData();
+                // Re-render apiAgents after both data sources are updated
+                this.renderModule('apiAgents', this.data.usage || {});
                 this.updateTimestamp();
                 headerRefreshBtn.style.opacity = '1';
             });
@@ -111,10 +116,13 @@ class NexusDashboard {
                 this.data[key] = data;
                 
                 // Render merged modules when their sub-data is ready
+                // Note: apiAgents requires both status (from fetchAllData) AND usage (from fetchUsageData)
+                // so we don't render it here - it will be rendered after both data sources are available
                 if (key === 'health' || key === 'system') {
                     this.renderModule('gatewaySystem', data);
-                } else if (key === 'status' || key === 'usage') {
-                    this.renderModule('apiAgents', data);
+                } else if (key === 'status') {
+                    // Store status data but don't render apiAgents yet - wait for usage data
+                    this.data.status = data;
                 } else {
                     this.renderModule(key, data);
                 }
