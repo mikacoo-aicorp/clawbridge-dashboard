@@ -482,7 +482,7 @@ app.get('/api/usage', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '127.0.0.1', () => {
     console.log(`⬡ CLAWBRIDGE DASHBOARD ${VERSION}`);
     console.log(`🌐 http://localhost:${PORT}`);
 });
