@@ -34,6 +34,7 @@ setInterval(pollCpu, 5000);
 const DATA_DIR = path.join(__dirname, 'data');
 const USAGE_FILE = path.join(DATA_DIR, 'usage.json');
 const ALL_MODELS = ['MiniMax-M2.5', 'gpt-5.4'];
+const DISPLAY_MODELS = ['gpt-5.4'];
 
 if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -422,16 +423,16 @@ app.get('/api/usage', async (req, res) => {
 
         ALL_MODELS.forEach(model => {
             const stats = usageData.models[model] || { inputTokens: 0, outputTokens: 0 };
+            totalTokens += stats.inputTokens + stats.outputTokens;
+        });
+
+        DISPLAY_MODELS.forEach(model => {
+            const stats = usageData.models[model] || { inputTokens: 0, outputTokens: 0 };
             let cost = null;
             let costLabel = null;
 
-            // MiniMax-M2.5: fixed $10/mo plan
-            if (model === 'MiniMax-M2.5') {
-                cost = 10;
-                costLabel = '$10/mo';
-                totalCost += cost;
-            // GPT Plus 5.4 (GPT Pro OAuth): fixed $200/mo plan
-            } else if (model === 'gpt-5.4') {
+            // GPT Pro OAuth: fixed $200/mo plan
+            if (model === 'gpt-5.4') {
                 cost = 200;
                 costLabel = '$200/mo';
                 totalCost += cost;
@@ -447,10 +448,8 @@ app.get('/api/usage', async (req, res) => {
                 cost,
                 costLabel
             };
-
-            totalTokens += stats.inputTokens + stats.outputTokens;
         });
-        
+
         // Backward compatibility: include legacy gpt-5.3-codex tokens in total (but not in cost)
         if (usageData.models['gpt-5.3-codex']) {
             const legacyStats = usageData.models['gpt-5.3-codex'];

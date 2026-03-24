@@ -407,7 +407,7 @@ class NexusDashboard {
                     // Separate GPT Pro OAuth (with OAuth quota) from other models
                     const gpt54Row = models['gpt-5.4'] ? renderCodexQuota() : '';
                     const otherModels = Object.entries(models)
-                        .filter(([model]) => model !== 'gpt-5.4')
+                        .filter(([model]) => model !== 'gpt-5.4' && model !== 'MiniMax-M2.5')
                         .map(([model, stats]) => {
                         const name = modelNames[model] || model;
                         const icon = modelIcons[model] || '⚪';
