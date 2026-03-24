@@ -443,7 +443,7 @@ class NexusDashboard {
                         </div>
                         <div class="usage-models">
                             ${gpt54Row}
-                            ${otherModels || '<div class="usage-empty">No usage data</div>'}
+                            ${otherModels}
                         </div>
                     `;
                     
