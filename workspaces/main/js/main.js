@@ -354,7 +354,9 @@ class NexusDashboard {
                                         <div class="quota-summary-item"><span class="quota-label-inline">week:</span> <span class="quota-value-inline ${weekWarn}">${100 - week.usedPercent}%</span></div>
                                         <div class="quota-summary-item"><span class="quota-label-inline">week reset:</span> <span class="quota-value-inline">${formatResetSummaryDate(week.resetAt)}</span></div>
                                     </div>
-                                    <div class="usage-cost">${gpt54Stats.costLabel}</div>
+                                    <div class="quota-summary-collapsed">
+                                        <div class="quota-summary-item"><span class="quota-label-inline">price:</span> <span class="quota-value-inline">${gpt54Stats.costLabel}</span></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="codex-quota-details hidden" id="codex-details-ws">
