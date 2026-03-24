@@ -291,7 +291,7 @@ class NexusDashboard {
 
         const modelNames = {
             'MiniMax-M2.5': 'MiniMax M2.5',
-            'gpt-5.4': 'GPT Pro OAuth'
+            'gpt-5.4': 'GPT Pro'
         };
 
         const modelIcons = {
@@ -328,11 +328,9 @@ class NexusDashboard {
             };
             const formatResetDate = (ts) => {
                 if (!ts) return 'N/A';
-                return new Date(ts).toLocaleString([], {
+                return new Date(ts).toLocaleDateString([], {
                     month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                    day: 'numeric'
                 });
             };
             
@@ -345,7 +343,7 @@ class NexusDashboard {
                         <span class="toggle-icon">▶</span>
                         <span class="usage-icon">🟡</span>
                         <div class="usage-model-name-block">
-                            <span class="usage-model-name">GPT Pro OAuth</span>
+                            <span class="usage-model-name">GPT Pro</span>
                             <span class="oauth-badge">OAuth</span>
                         </div>
                     </div>
@@ -889,7 +887,7 @@ class NexusDashboard {
         // Model display names
         const modelNames = {
             'MiniMax-M2.5': 'MiniMax M2.5',
-            'gpt-5.4': 'GPT Pro OAuth'
+            'gpt-5.4': 'GPT Pro'
         };
 
         // Model icons
@@ -927,11 +925,9 @@ class NexusDashboard {
             };
             const formatResetDate = (ts) => {
                 if (!ts) return 'N/A';
-                return new Date(ts).toLocaleString([], {
+                return new Date(ts).toLocaleDateString([], {
                     month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                    day: 'numeric'
                 });
             };
             
@@ -944,7 +940,7 @@ class NexusDashboard {
                         <span class="toggle-icon">▶</span>
                         <span class="usage-icon">🟡</span>
                         <div class="usage-model-name-block">
-                            <span class="usage-model-name">GPT Pro OAuth</span>
+                            <span class="usage-model-name">GPT Pro</span>
                             <span class="oauth-badge">OAuth</span>
                         </div>
                     </div>

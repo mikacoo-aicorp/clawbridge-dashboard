@@ -279,7 +279,7 @@ class NexusDashboard {
                     
                     const modelNames = {
                         'MiniMax-M2.5': 'MiniMax M2.5',
-                        'gpt-5.4': 'GPT Pro OAuth',
+                        'gpt-5.4': 'GPT Pro',
                         'gpt-5.3-codex': 'GPT Codex 5.3'
                     };
                     
@@ -336,7 +336,7 @@ class NexusDashboard {
                                     <span class="toggle-icon">▶</span>
                                     <span class="usage-icon">🟡</span>
                                     <div class="usage-model-name-block">
-                                        <span class="usage-model-name">GPT Pro OAuth</span>
+                                        <span class="usage-model-name">GPT Pro</span>
                                         <span class="oauth-badge">OAuth</span>
                                     </div>
                                 </div>
@@ -930,7 +930,7 @@ class NexusDashboard {
         // Model display names
         const modelNames = {
             'MiniMax-M2.5': 'MiniMax M2.5',
-            'gpt-5.4': 'GPT Pro OAuth',
+            'gpt-5.4': 'GPT Pro',
             'gpt-5.3-codex': 'GPT Codex 5.3'
         };
 
