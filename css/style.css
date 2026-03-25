@@ -212,13 +212,9 @@ body {
 
 .module-title-area {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
     min-height: 24px;
-}
-
-.module-title-area .module-title {
-    margin-top: -2px;
 }
 
 .module-title {
@@ -252,18 +248,24 @@ body {
 }
 
 .module-refresh {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 25px;
+    font-size: 14px;
     line-height: 1;
     cursor: pointer;
-    padding: 4px 8px;
+    padding: 0;
     margin-right: 0;
     border-radius: var(--radius-sm);
     transition: all 0.2s ease;
     opacity: 0.6;
     align-self: center;
+    transform: translateY(-1px);
 }
 
 .module-refresh:hover {
