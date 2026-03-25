@@ -212,9 +212,13 @@ body {
 
 .module-title-area {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
     min-height: 24px;
+}
+
+.module-title-area .module-title {
+    margin-top: -2px;
 }
 
 .module-title {
