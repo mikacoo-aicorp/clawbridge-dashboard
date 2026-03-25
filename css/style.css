@@ -210,6 +210,13 @@ body {
     border-bottom: 1px solid var(--border-color);
 }
 
+.module-title-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 24px;
+}
+
 .module-title {
     font-size: 14px;
     font-weight: 600;
@@ -217,6 +224,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    line-height: 1.2;
 }
 
 .module-title .icon {
@@ -244,12 +252,14 @@ body {
     border: none;
     color: var(--text-secondary);
     font-size: 25px;
+    line-height: 1;
     cursor: pointer;
     padding: 4px 8px;
-    margin-right: auto;
+    margin-right: 0;
     border-radius: var(--radius-sm);
     transition: all 0.2s ease;
     opacity: 0.6;
+    align-self: center;
 }
 
 .module-refresh:hover {
@@ -1000,4 +1010,137 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+/* Codex OAuth Quota */
+.codex-oauth-row {
+    border-bottom: none;
+}
+
+.oauth-badge {
+    background: var(--accent-color, #6366f1);
+    color: white;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    margin-left: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.codex-quota-details {
+    background: var(--bg-secondary, #1e1e2e);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0 16px 0;
+    border-left: 3px solid #fbbf24;
+}
+
+.codex-quota-details .quota-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 12px;
+}
+
+.codex-quota-details .quota-label {
+    color: var(--text-muted, #9ca3af);
+}
+
+.codex-quota-details .quota-value {
+    font-weight: 600;
+    color: var(--text-primary, #e5e7eb);
+}
+
+.codex-quota-details .quota-value.warning {
+    color: #fbbf24;
+}
+
+.codex-quota-details .quota-value.danger {
+    color: #ef4444;
+}
+
+.codex-quota-details .quota-note {
+    font-size: 10px;
+    color: var(--text-muted, #9ca3af);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color, #374151);
+    font-style: italic;
+}
+
+.codex-quota-details.hidden {
+    display: none;
+}
+
+.usage-model-row .toggle-icon {
+    font-size: 10px;
+    margin-right: 6px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.usage-model-row.collapsed .quota-summary {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.quota-summary-collapsed {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: right;
+}
+
+.quota-summary-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 11px;
+}
+
+.quota-label-inline {
+    color: var(--text-muted, #9ca3af);
+}
+
+.quota-value-inline {
+    font-weight: 700;
+    color: var(--text-primary, #e5e7eb);
+}
+
+.quota-value-inline.warning {
+    color: #fbbf24;
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
+
+.quota-value-inline.danger {
+    color: #ef4444;
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.usage-model-name-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.usage-model-name-block .oauth-badge {
+    margin-left: 0;
+    align-self: flex-start;
+}
+
+.model-badges {
+    display: flex;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+.plan-badge {
+    background: #10b981;
+    color: white;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }

@@ -59,11 +59,13 @@ class NexusDashboard {
             
             moduleEl.innerHTML = `
                 <div class="module-header">
-                    <div class="module-title">
-                        <span class="icon">${mod.icon}</span>
-                        <span>${mod.title}</span>
+                    <div class="module-title-area">
+                        <div class="module-title">
+                            <span class="icon">${mod.icon}</span>
+                            <span>${mod.title}</span>
+                        </div>
+                        ${refreshBtn}
                     </div>
-                    ${refreshBtn}
                     <span class="module-badge">Loading</span>
                 </div>
                 <div class="module-content">
